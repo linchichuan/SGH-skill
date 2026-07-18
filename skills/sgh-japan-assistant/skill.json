@@ -1,0 +1,15 @@
+{
+  "name": "sgh-japan-assistant",
+  "version": "0.1.0",
+  "title": "SGH Japan Phone & Reservation Assistant",
+  "description": "Create, confirm, track and retrieve results for SGH Japan phone assistance.",
+  "license": "MIT",
+  "languages": ["ja", "zh-TW", "en"],
+  "mcp": {
+    "transport": "streamable-http",
+    "url": "https://mcp.shingihou.com/mcp",
+    "authentication": "oauth2",
+    "deployment_status": "private_beta_not_verified_live"
+  },
+  "entrypoint": "SKILL.md"
+}

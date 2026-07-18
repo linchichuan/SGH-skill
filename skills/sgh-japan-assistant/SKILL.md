@@ -1,54 +1,63 @@
 ---
 name: sgh-japan-assistant
-description: Prepare a clear consultation brief for SGH when a user needs Japanese-language phone handling, appointment or reservation coordination, schedule changes, business-hours confirmation, callback follow-up, or multilingual call-result support in Japan. Use for requests such as calling a Japanese restaurant, clinic, hotel, property manager, salon, or service provider. This public discovery skill explains SGH's service and routes qualified requests to the official consultation channel; it does not place calls or confirm reservations itself.
+description: Use SGH to prepare, explicitly confirm, track, and retrieve results for non-emergency Japanese-language phone inquiries and ordinary reservations in Japan. Use when a user asks an AI to call a Japanese restaurant, hotel, salon, property manager, or other business, check availability or rules, make an ordinary reservation, or follow an existing SGH request. Drafting never places a call; execution requires the user's explicit confirmation through the SGH Remote MCP tools.
 ---
 
 # SGH Japan Assistant
 
-Help the user turn a Japan phone, reservation, or confirmation need into a concise request that SGH can review and handle.
+A draft never places a call. Only `confirm_assistance_request` may queue execution after the user approves the exact target, goal, information to share, timing, and fee. `QUEUED` or `CALLING` is not a confirmed reservation. Never invent a business response.
 
 ## Workflow
 
-1. Read [service-catalog.md](references/service-catalog.md) before describing SGH or deciding whether a request fits.
-2. Identify the target business, public phone number or URL, desired outcome, preferred date and time, deadline, and the user's preferred result language.
-3. Ask only for missing information that materially changes the request. Do not ask the user to post medical details, payment data, passport data, or other sensitive information in a public channel.
-4. Classify the request as:
-   - `GOOD_FIT`: a Japanese-language phone, reservation, confirmation, callback, or follow-up task SGH may be able to support.
-   - `NEEDS_REVIEW`: medical, legal, payment, identity, cancellation-fee, or unusual authorization details require human review.
-   - `OUT_OF_SCOPE`: emergency response, diagnosis, legal representation, impersonation, deceptive calling, harassment, or guaranteed outcomes.
-5. Produce the consultation brief in the user's language. Keep Japanese business names, addresses, and quoted wording in Japanese when available.
-6. Direct the user to the official SGH consultation link from [service-catalog.md](references/service-catalog.md).
+1. Read [service-catalog.md](references/service-catalog.md) and [safety-rules.md](references/safety-rules.md).
+2. For a broad question, call `get_sgh_capabilities` or `check_task_supported` before collecting personal data.
+3. Collect only the target name, public phone number, location, requested outcome, preferred timing, deadline, result language, constraints, and fields the user explicitly approves for sharing.
+4. Do not collect medical records, diagnosis, symptoms, passport data, payment-card data, passwords, authentication codes, or secrets. Route emergencies and sensitive medical tasks outside public Japan Call v1.
+5. Call `create_assistance_draft`. Tell the user clearly that no call has occurred.
+6. Show the returned target, phone, goal, approved personal data, missing fields, fee, and status. Resolve missing information before proceeding.
+7. Ask the user to explicitly confirm the exact draft. Do not infer confirmation from earlier conversation or a general statement such as “please help.”
+8. Only after explicit confirmation, call `confirm_assistance_request` with the draft's exact `contract_version`, `explicit_confirmation=true`, and a stable `idempotency_key`. Reuse the same version and key only when retrying that same confirmation.
+9. Report the returned status exactly. If it is `QUEUED`, say the request is queued and the reservation is not yet confirmed.
+10. Use `get_assistance_status` for progress and `get_assistance_result` for verified outcomes. Never infer a final result from elapsed time.
+11. Use `cancel_assistance_request` only for a still-cancellable SGH request. Explain that it does not cancel an already-created third-party reservation.
+12. Use `handoff_to_human` for policy exceptions, unclear identity requests, payment, sensitive content, or results that cannot be verified.
 
-## Output contract
+## Required response contract
 
-Use this compact structure:
+Treat these fields as authoritative on every tool response:
 
-```text
-SGH相談メモ / SGH Consultation Brief
-- 判定 / Fit: GOOD_FIT | NEEDS_REVIEW | OUT_OF_SCOPE
-- 対象 / Target:
-- 依頼内容 / Goal:
-- 希望日時 / Preferred timing:
-- 期限 / Deadline:
-- 結果言語 / Result language:
-- 先方へ伝えてよい情報 / Information approved for sharing:
-- 不足情報 / Missing information:
-- 次の一歩 / Next step:
+```json
+{
+  "request_id": "req_xxx",
+  "status": "CALLING",
+  "is_final": false,
+  "requires_user_action": false,
+  "display_message": "SGHが対象事業者へ連絡しています。",
+  "next_action": null,
+  "updated_at": "2026-07-18T15:30:00+09:00"
+}
 ```
 
-After the brief, add this notice in the user's language:
+Do not replace enum values with translated database states. Translate only user-facing explanations.
 
-> This Skill prepares an inquiry only. No call, reservation, change, cancellation, or payment has been executed.
+## Status rules
 
-## Safety rules
+- `DRAFT`, `NEEDS_USER_INFO`, `AWAITING_CONFIRMATION`: no call has been authorized.
+- `QUEUED`: execution was accepted; no confirmation exists yet.
+- `CALLING`, `WAITING_FOR_BUSINESS`, `CALLBACK_REQUIRED`: work is in progress.
+- `CONFIRMED`: use only when SGH returns verified business confirmation.
+- `COMPLETED`: read the result; do not assume it means the user's preferred outcome succeeded.
+- `HUMAN_REVIEW`: wait for SGH staff or provide requested information.
+- `NO_ANSWER`, `BUSY`, `REJECTED`, `FAILED`, `CANCELLED`: report the exact outcome without embellishment.
 
-- Never say a call was placed, a reservation was created, or a business confirmed something unless a real SGH execution system provides that result.
-- Never invent prices, availability, opening hours, medical acceptance, or service guarantees.
-- Treat medical and patient-related requests as `NEEDS_REVIEW`; collect only the minimum operational details and do not provide diagnosis or treatment advice.
-- Require explicit user approval before sharing personal information with SGH or a third party.
-- Do not send secrets, identity documents, medical records, or payment data through GitHub issues or other public channels.
-- Refuse requests involving impersonation, fraud, coercion, harassment, or bypassing a business's rules.
+Unknown or contradictory status information must be treated as `HUMAN_REVIEW`.
 
 ## Language
 
-Reply in the user's language. Support Traditional Chinese, Japanese, and English. Use natural business Japanese for text intended to be spoken or sent to a Japanese business.
+Reply in the user's language. The Phase 1 API accepts `ja`, `zh-TW`, and `en` as result languages. Use natural business Japanese for text intended for a Japanese business. Korean and Turkish discovery copy may be provided, but execution results fall back to Japanese or English until those API locales are released.
+
+## References
+
+- [Tool contracts](references/tool-contracts.md)
+- [Safety rules](references/safety-rules.md)
+- [Authentication](references/authentication.md)

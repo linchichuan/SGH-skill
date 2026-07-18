@@ -1,0 +1,38 @@
+{
+  "name": "@sgh/japan-assistant-mcp",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Public Agent Skill and Remote MCP gateway for SGH Japan phone assistance",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "express": "5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.1.0",
+    "jose": "6.2.3",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "25.5.0",
+    "@types/supertest": "7.2.0",
+    "supertest": "7.2.2",
+    "tsx": "4.21.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

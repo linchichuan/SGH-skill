@@ -1,4 +1,7 @@
 interface:
   display_name: "SGH Japan Assistant"
-  short_description: "日本での電話・予約相談をSGHへつなぐ公開Skill"
-  default_prompt: "Use $sgh-japan-assistant to prepare a clear SGH consultation brief for a phone, reservation, or confirmation task in Japan."
+  short_description: "日本語の電話依頼を作成・確認・追跡するSGH Skill"
+  icon_small: "./assets/sgh-icon.svg"
+  icon_large: "./assets/sgh-icon.png"
+  brand_color: "#F57C00"
+  default_prompt: "Use $sgh-japan-assistant to draft this Japan phone request, show me the exact target, shared data and fee, then wait for my explicit confirmation before queuing execution."
