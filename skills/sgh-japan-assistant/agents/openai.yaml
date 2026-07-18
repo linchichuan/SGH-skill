@@ -1,0 +1,4 @@
+interface:
+  display_name: "SGH Japan Assistant"
+  short_description: "日本での電話・予約相談をSGHへつなぐ公開Skill"
+  default_prompt: "Use $sgh-japan-assistant to prepare a clear SGH consultation brief for a phone, reservation, or confirmation task in Japan."
