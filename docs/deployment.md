@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-- Public HTTPS origin such as `https://mcp.shingihou.com`
+- SGH Service Backend deployment that exposes the public HTTPS origin
+  `https://mcp.shingihou.com/mcp`
 - OAuth 2.1 authorization server supporting authorization code + PKCE S256 and MCP resource binding
 - Private SGH Service deployment with `/api/service/mcp`
 - `20260718150000_sgh_mcp_gateway.sql` applied after the existing Agent Platform migrations
@@ -12,12 +13,16 @@
 
 Use `env.example` as the key list. Never copy production values into the repository, image, build log or client configuration.
 
-## Container
+## SGH Service deployment
 
-```bash
-docker build -t sgh-japan-assistant-mcp .
-docker run --rm -p 3000:3000 --env-file .env sgh-japan-assistant-mcp
-```
+The public Streamable HTTP route is mounted in the SGH Service Backend. It
+uses the existing private `/api/service/mcp` control-plane adapter in-process;
+there is no separate Medical Supporter service and no additional public MCP
+container to operate.
+
+Bind `mcp.shingihou.com` to the SGH Service Backend service, set the MCP/OAuth
+variables in that service's secret manager, then deploy the backend commit that
+contains `src/routes/publicMcp.ts`.
 
 ## Pre-release checks
 
