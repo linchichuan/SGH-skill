@@ -15,6 +15,38 @@ const config: AppConfig = {
 };
 
 describe('HttpSghGateway', () => {
+  it('forwards the draft idempotency key without including it in the request body', async () => {
+    const fetchMock = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response(JSON.stringify({ data: { request_id: 'req_draft' } }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+    const gateway = new HttpSghGateway(config, fetchMock);
+    const draft = {
+      task_type: 'PHONE_INQUIRY' as const,
+      target: { name: 'Test Hotel', phone: '+81312345678' },
+      goal: 'Confirm late check-in.',
+      result_language: 'en' as const,
+      approved_personal_data: {},
+    };
+
+    await gateway.createDraft(
+      {
+        subject: 'oauth-user-1',
+        issuer: 'https://auth.example.test',
+        scopes: new Set(['requests:write']),
+      },
+      draft,
+      'draft:test-hotel:v1'
+    );
+
+    const [, init] = fetchMock.mock.calls[0]!;
+    const headers = new Headers(init?.headers);
+    expect(headers.get('Idempotency-Key')).toBe('draft:test-hotel:v1');
+    expect(init?.body).toBe(JSON.stringify(draft));
+  });
+
   it('forwards a stable idempotency key and resolved OAuth subject', async () => {
     const fetchMock = vi.fn<typeof fetch>().mockResolvedValue(
       new Response(

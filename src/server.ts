@@ -38,7 +38,7 @@ export function createApp(input: {
 
   app.use('/mcp', rateLimit({
     windowMs: 60_000,
-    limit: 120,
+    limit: 60,
     standardHeaders: 'draft-8',
     legacyHeaders: false,
   }));

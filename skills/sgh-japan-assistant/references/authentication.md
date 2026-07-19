@@ -11,4 +11,6 @@ Scopes:
 
 OAuth scope does not replace action-specific confirmation. Calls、personal-data sharing、cancellation、rescheduling and payment require a durable consent record.
 
+OAuth also does not prove payment. Execution requires a separate server-side commercial check for an active paid contract, prepaid credit, or issuer-funded service-scoped SGH Pass. Discovery-only and Menu Bridge entitlements must never satisfy this check.
+
 Never place access tokens、refresh tokens、client secrets or internal SGH credentials in the Skill repository.

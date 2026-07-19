@@ -14,7 +14,7 @@
 
 ![SGH Japan Assistant — Japonya'daki telefon ve rezervasyon taleplerini net bir özete dönüştürün](assets/sgh-skill-hero.png)
 
-> **MVP / Private beta** — Bu repository Agent Skill, Streamable HTTP `/mcp`, dokuz araç, OAuth resource-server doğrulaması, SGH Service adapter, Supabase migration ve otomatik testleri içerir. Önerilen production URL, deployment ve OAuth smoke test tamamlanmadan canlı kabul edilmez.
+> **MVP / Private beta** — Herkese açık repository ve yerel Skill, SGH'yi tanıtmak ve talebi hazırlamak için bir giriş noktasıdır. Remote MCP yürütme araçları; OAuth, ücretli kullanım hakkı ve production doğrulaması tamamlanmadan canlı hizmet sayılmaz.
 
 ## Japonca telefon görüşmesini tek başınıza halletmek zorunda değilsiniz.
 
@@ -25,6 +25,19 @@ Restoran rezervasyonu, otel bilgisi, klinik sorgusu veya randevu değişikliği�
 `SGH Japan Assistant Skill`, uyumlu AI araçlarının draft oluşturmasına, kullanıcının açık onayını almasına, durumu izlemesine ve SGH tarafından doğrulanmış sonucu getirmesine yardımcı olan herkese açık bir Agent Skill ve Remote MCP gateway'dir.
 
 [SGH Phone'u ziyaret edin](https://phone.shingihou.com) · [İlk görüşmeyi planlayın](https://calendar.app.google/RF2YRyJifsPzjbDj8) · [Bize ulaşın](https://phone.shingihou.com/support/contact)
+
+> [!IMPORTANT]
+> **Bu repository'nin açık olması, clone edilmesi veya Skill'in kurulması ücretsiz SGH Phone araması ya da ücretsiz destek hakkı vermez.**
+> SGH tarafından yapılan gerçek aramalar, rezervasyonlar, değişiklikler, iptaller ve insan desteği ücretli hizmetlerdir. Aktif sözleşme, ön ödemeli kredi veya maliyeti düzenleyen kuruluşça karşılanan ve ilgili hizmetle sınırlı bir SGH Pass olmadan talep yürütme kuyruğuna alınmaz.
+
+## Ücretsiz açık katman ve ücretli yürütme
+
+| Ücretsiz açık ve tanıtım katmanı | Ücretli SGH yürütme hizmeti |
+|---|---|
+| README, örnekler ve açık belgeler | SGH tarafından dış arama |
+| Yerel Skill kurulumu | Gerçek rezervasyon, değişiklik ve iptal |
+| Talep ve danışma özeti hazırlama | İnsan desteği ve takip |
+| Yan etkisiz yetenek ve uygunluk kontrolü | Twilio, sesli AI veya SGH personeli kullanan işlemler |
 
 ## AI'nıza doğrudan sorun
 
@@ -96,7 +109,11 @@ SGH Consultation Brief
 
 ## Önemli sınırlar
 
-Yerel `SKILL.md` tek başına arama yapmaz. Kimliği doğrulanmış Remote MCP'de draft oluşturmak da arama başlatmaz; yalnızca kullanıcı hedefi, amacı, paylaşılacak verileri, zamanı ve ücreti açıkça onayladıktan sonra `confirm_assistance_request` yürütmeyi kuyruğa alabilir. `QUEUED` veya `CALLING`, rezervasyonun onaylandığı anlamına gelmez.
+Yerel `SKILL.md` tek başına arama yapmaz. Remote MCP'de draft oluşturmak da arama başlatmaz. Yürütmeden önce aktif ücretli sözleşme, ön ödemeli kredi veya düzenleyen kuruluşça finanse edilen hizmete özel SGH Pass doğrulanmalı; kullanıcı da hedefi, amacı, paylaşılacak verileri, zamanı ve ücreti açıkça onaylamalıdır. `QUEUED` veya `CALLING`, rezervasyonun onaylandığı anlamına gelmez.
+
+- Bu repository SGH arama kredisi içermez.
+- Ücretli hak yoksa sistem `ENTITLEMENT_REQUIRED` döndürür ve arama ya da insan işi oluşturmaz.
+- SGH Pass, kapsamı sınırlı ücretli veya sponsorlu bir haktır; herkese açık ücretsiz Token değildir.
 
 - Talebin gerçekten karşılanıp karşılanamayacağını SGH doğrular.
 - Fiyat, çalışma saati, müsaitlik veya klinik kabul koşulları uydurulmaz.
@@ -123,6 +140,14 @@ SGH Phone; Japonca telefon karşılama, IVR, arama kayıtları, özetler, person
 - Küçük bir ekiple telefon operasyonlarını ve takibi sürdürün
 
 SGH, işletmelere yönelik uygulama danışmanlığı da sunar.
+
+## Menu Bridge gibi tanıtım Skill'leri
+
+Menu Bridge; menü, SSS, dil açıklamaları ve talep hazırlığını ücretsiz sunan bir `Powered by SGH` tanıtım yüzeyi olabilir. Gerçek arama, rezervasyon, değişiklik, iptal ve insan desteği yine SGH'nin ücretli akışına girer. Tanıtım Pass'leri SGH Phone kredisi olarak kullanılamaz.
+
+## Açık kaynak lisansı hizmet kredisi değildir
+
+MIT License yalnızca repository kodu için geçerlidir. SGH Phone araması, destek hizmeti, insan emeği, marka veya SGH marka varlıklarını kullanma hakkı vermez.
 
 ## Resmî bağlantılar
 

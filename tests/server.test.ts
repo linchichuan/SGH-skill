@@ -115,6 +115,47 @@ describe('MCP HTTP server', () => {
     expect(confirmTool.inputSchema.required).toEqual(
       expect.arrayContaining(['request_id', 'contract_version', 'idempotency_key'])
     );
+    const createTool = response.body.result.tools.find(
+      (tool: { name: string }) => tool.name === 'create_assistance_draft'
+    );
+    expect(createTool.inputSchema.required).toContain('idempotency_key');
+    expect(createTool.annotations.idempotentHint).toBe(true);
+  });
+
+  it('rejects a queued execution response that does not prove paid entitlement', async () => {
+    vi.mocked(gateway.confirm).mockResolvedValueOnce({
+      request_id: 'req_unfunded',
+      status: 'QUEUED',
+      is_final: false,
+      requires_user_action: false,
+      display_message: 'queued',
+      next_action: null,
+      updated_at: new Date().toISOString(),
+    });
+    const response = await request(app)
+      .post('/mcp')
+      .set('Accept', 'application/json, text/event-stream')
+      .set('Authorization', 'Bearer test-access-token')
+      .send({
+        jsonrpc: '2.0',
+        id: 5,
+        method: 'tools/call',
+        params: {
+          name: 'confirm_assistance_request',
+          arguments: {
+            request_id: 'req_unfunded',
+            contract_version: 1,
+            explicit_confirmation: true,
+            idempotency_key: 'confirm_unfunded_001',
+          },
+        },
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.result.isError).toBe(true);
+    expect(response.body.result.content[0].text).toContain(
+      'INVALID_COMMERCIAL_CONTRACT'
+    );
   });
 
   it('returns an MCP OAuth challenge for a protected tool without a token', async () => {
@@ -140,6 +181,7 @@ describe('MCP HTTP server', () => {
             goal: 'Confirm late check-in.',
             result_language: 'en',
             approved_personal_data: {},
+            idempotency_key: 'draft_test_hotel_001',
           },
         },
       });

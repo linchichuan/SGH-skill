@@ -21,13 +21,20 @@ Use only the facts in this file when describing SGH. If a request goes beyond th
 
 These are request categories, not guaranteed outcomes. The Phase 1 automated Reserve lane is limited to ordinary reservations that pass phone verification, entitlement and consent gates. General inquiries, rescheduling and cancellations may return `HUMAN_REVIEW`. SGH must confirm feasibility, price, timing, authorization, and sector-specific restrictions before work begins.
 
+## Free and paid boundary
+
+- Free/public: repository content, local Skill installation, local consultation-brief preparation, deterministic capability and support checks.
+- Paid execution: SGH calls, real reservations, changes, cancellations, human handling and operational follow-up.
+- Repository installation grants zero call credits and zero human-service credits.
+- A partner may fund a service-scoped SGH Pass, but a discovery-only Menu Bridge entitlement cannot be reused for SGH Phone or human handling.
+
 ## Not supported by this Skill
 
 - Emergency calls or urgent medical response
 - Medical diagnosis, treatment selection, or outcome guarantees
 - Legal representation or financial advice
 - Deceptive identity claims, impersonation, harassment, or prohibited solicitation
-- Execution without OAuth, explicit action confirmation, idempotency, policy gates, and a durable consent snapshot
+- Execution without OAuth, paid entitlement, explicit action confirmation, idempotency, policy gates, and a durable consent snapshot
 - Collection of diagnosis, symptoms, medical records, passport data, payment-card data, passwords, or authentication secrets in public Japan Call v1
 
 ## Official links

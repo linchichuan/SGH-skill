@@ -8,7 +8,7 @@ import type { AppConfig } from './config.js';
 export interface SghGateway {
   capabilities(): Promise<Record<string, unknown>>;
   checkTaskSupported(input: Record<string, unknown>): Promise<Record<string, unknown>>;
-  createDraft(auth: AuthContext, input: AssistanceDraftInput): Promise<GatewayResponse>;
+  createDraft(auth: AuthContext, input: AssistanceDraftInput, idempotencyKey: string): Promise<GatewayResponse>;
   confirm(auth: AuthContext, requestId: string, contractVersion: number, idempotencyKey: string): Promise<GatewayResponse>;
   status(auth: AuthContext, requestId: string): Promise<GatewayResponse>;
   result(auth: AuthContext, requestId: string): Promise<GatewayResponse>;
@@ -45,9 +45,10 @@ export class HttpSghGateway implements SghGateway {
     });
   }
 
-  createDraft(auth: AuthContext, input: AssistanceDraftInput) {
+  createDraft(auth: AuthContext, input: AssistanceDraftInput, idempotencyKey: string) {
     return this.authed<GatewayResponse>(auth, '/requests', {
       method: 'POST',
+      headers: { 'Idempotency-Key': idempotencyKey },
       body: JSON.stringify(input),
     });
   }

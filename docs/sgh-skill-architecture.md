@@ -23,7 +23,9 @@ create_assistance_draft
      └─ no phone side effect
 
 confirm_assistance_request
-  └─ validate OAuth scope + explicit_confirmation + contract version
+  └─ validate OAuth scope + paid entitlement + explicit_confirmation + contract version
+  └─ validate tenant / service / plan / call or human scope
+  └─ atomically reserve the applicable paid or sponsor-funded credit
   └─ atomic idempotency claim
   └─ persist consent snapshot
   └─ queue outbox / Reserve execution
@@ -31,6 +33,8 @@ confirm_assistance_request
 ```
 
 `QUEUED`、`CALLING`、`WAITING_FOR_BUSINESS` は予約成立を意味しない。`CONFIRMED` は対象事業者から得た deterministic evidence がある場合に限る。
+
+Public repository access and local Skill installation grant zero SGH call credits and zero human-service credits. See [commercial-boundary.md](commercial-boundary.md).
 
 ## Public state mapping
 
@@ -66,6 +70,6 @@ Unknown internal/provider states fail into `HUMAN_REVIEW`; they never become `CO
 
 ## Phase boundaries
 
-- Phase 1: non-sensitive phone inquiry and ordinary reservation; private beta for authenticated actions.
-- Phase 2: cancellation/rescheduling、Pass、LINE/Email result notification、payment quote.
+- Phase 1: public discovery、local consultation brief、paid-entitlement contract、private beta for funded non-sensitive actions.
+- Phase 2: cancellation/rescheduling、Pass management、LINE/Email result notification、self-service payment quote.
 - Phase 3: medical vertical with separate scopes、consent、retention and compliance review.

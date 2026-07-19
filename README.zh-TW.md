@@ -14,7 +14,7 @@
 
 ![SGH Japan Assistant — 將日本電話、預約與確認需求交給 AI 整理](assets/sgh-skill-hero.png)
 
-> **MVP／Private beta** — 這個 repository 現在包含 Agent Skill、Streamable HTTP `/mcp`、9 個 tools、OAuth resource-server 驗證、SGH Service adapter、Supabase migration 與自動測試。正式網址在完成部署及 OAuth smoke test 前，不視為已上線。
+> **MVP／Private beta** — 公開 repository 與本機 Skill 是 SGH 的宣傳及需求整理入口。Remote MCP 的執行型工具在 OAuth、付費資格與正式環境驗證完成前，不視為正式服務。
 
 ## 那通日文電話，不必再自己硬撐。
 
@@ -25,6 +25,21 @@
 `SGH Japan Assistant Skill` 是公開的 Agent Skill＋Remote MCP gateway，讓 ChatGPT、Codex、Claude Code 等 AI 建立草稿、取得本人明確確認、查詢進度並取得 SGH 驗證過的結果。
 
 [查看 SGH Phone](https://phone.shingihou.com) ・ [預約初次諮詢](https://calendar.app.google/RF2YRyJifsPzjbDj8) ・ [聯絡我們](https://phone.shingihou.com/support/contact)
+
+> [!IMPORTANT]
+> **公開 repository、clone 或安裝 Skill，不代表附贈 SGH Phone 免費通話或免費代辦。**
+> SGH 實際打電話、預約、改期、取消與人工處理均為付費服務。沒有有效合約、已付款額度，或由發行方負擔費用且適用於該服務的 SGH Pass，任務不會進入執行佇列。
+
+## 免費公開層與付費執行層
+
+| 免費公開／宣傳功能 | SGH 付費執行服務 |
+|---|---|
+| 閱讀 README、案例與公開文件 | SGH 對外撥打電話 |
+| 安裝本機 Skill | 實際預約、改期與取消 |
+| 整理需求與產生相談摘要 | 人工接手與後續處理 |
+| 無副作用的能力／適用性確認 | 使用 Twilio、語音 AI 或營運人員的動作 |
+
+公開層負責讓使用者認識 SGH 並把需求整理好；凡是會讓 SGH 產生電話或人工成本的動作，都必須先確認付費資格。
 
 ## 直接這樣告訴你的 AI
 
@@ -96,7 +111,11 @@ SGH Consultation Brief
 
 ## 重要說明
 
-只有本機 `SKILL.md` 不會撥電話。接上已驗證的 Remote MCP 後，建立草稿仍不會產生電話副作用；只有使用者明確確認對象、目的、分享資料、時間與費用後，`confirm_assistance_request` 才能排入非同步執行。`QUEUED` 或 `CALLING` 絕不等於預約已完成。
+只有本機 `SKILL.md` 不會撥電話。接上 Remote MCP 後，建立草稿仍不會產生電話副作用；必須先驗證有效付費合約、已付款額度或發行方出資的 SGH Pass，再由使用者明確確認對象、目的、分享資料、時間與費用，才可能排入非同步執行。`QUEUED` 或 `CALLING` 絕不等於預約已完成。
+
+- 本 repo 不附贈任何 SGH 電話額度。
+- 沒有付費資格時，應回傳 `ENTITLEMENT_REQUIRED`，不可建立電話或人工案件。
+- SGH Pass 是受限的付費／贊助資格，不是公開免費 Token。
 
 - SGH 會另外確認實際対応可行性。
 - 不猜測價格、營業時間、空位或醫療機構接待條件。
@@ -123,6 +142,14 @@ SGH Phone 是協助企業整理日文電話接待、IVR、通話紀錄、摘要�
 - 希望少人數團隊也能持續處理電話與 follow-up
 
 SGH 同樣提供企業導入諮詢。
+
+## Menu Bridge 等宣傳型 Skill
+
+Menu Bridge 可以免費提供菜單、FAQ、語言說明與需求整理，作為 `Powered by SGH` 的宣傳入口；真實電話、訂位、改期、取消或人工處理仍須轉入 SGH 的付費流程。宣傳型 Pass 不得共用或兌換 SGH Phone 額度。
+
+## 授權不等於免費服務
+
+MIT License 僅適用於這個 repository 的程式碼，不包含 SGH Phone 通話、代辦、人工服務、商標或品牌資產的使用權。
 
 ## 官方連結
 

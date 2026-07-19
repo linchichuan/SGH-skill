@@ -8,6 +8,7 @@
 - Private SGH Service deployment with `/api/service/mcp`
 - `20260718150000_sgh_mcp_gateway.sql` applied after the existing Agent Platform migrations
 - Secret manager entries for OAuth JWKS configuration and the SGH Service internal credential
+- An explicit allowlist of paid or sponsor-funded MCP Pass plans; an empty allowlist blocks all execution
 
 ## Required environment
 
@@ -46,7 +47,10 @@ Then verify:
 8. Status/result never upgrade queued work to confirmed
 9. Pass token is stored as hash only and replay is atomic
 10. Signed provider callback replay and out-of-order behavior
+11. An unpaid confirm creates zero call attempts、outbox events and human handoffs
+12. `SGH_RESERVE_MEMBER_CALL_CREDITS_ENABLED=false` for public MCP traffic
+13. Stripe test authorization cannot fund a real production call
 
 ## Release gate
 
-Do not enable real-call flags until the SGH Service deployment SHA, database migration state, OAuth flow, SGH Phone callback and a controlled test-number call have been independently verified. Public GitHub publication does not mean the production MCP endpoint is live.
+Do not enable real-call flags until the SGH Service deployment SHA, database migration state, OAuth flow, paid entitlement binding, SGH Phone callback and a controlled test-number call have been independently verified. Keep direct public MCP human handoff disabled until human credit is atomically reserved. Public GitHub publication does not mean the production MCP endpoint is live.

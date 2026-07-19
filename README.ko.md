@@ -14,7 +14,7 @@
 
 ![SGH Japan Assistant — 일본 전화와 예약 요청을 명확한 상담 메모로](assets/sgh-skill-hero.png)
 
-> **MVP / Private beta** — 이 repository에는 Agent Skill, Streamable HTTP `/mcp`, 9개 tool, OAuth resource-server 검증, SGH Service adapter, Supabase migration 및 자동 테스트가 포함됩니다. 배포와 OAuth smoke test가 끝나기 전에는 제안된 production URL을 실제 운영 중으로 간주하지 않습니다.
+> **MVP / Private beta** — 공개 repository와 로컬 Skill은 SGH를 알리고 요청 내용을 준비하기 위한 입구입니다. Remote MCP 실행 도구는 OAuth, 유료 이용 자격, 운영 환경 검증이 끝나기 전에는 정식 서비스로 간주하지 않습니다.
 
 ## 그 일본어 전화, 혼자 고민하지 마세요.
 
@@ -25,6 +25,19 @@
 `SGH Japan Assistant Skill`은 호환 가능한 AI가 draft를 만들고, 사용자의 명시적 확인을 받은 뒤 진행 상태와 검증된 SGH 결과를 조회할 수 있게 하는 공개 Agent Skill 및 Remote MCP gateway입니다.
 
 [SGH Phone 보기](https://phone.shingihou.com) · [첫 상담 예약](https://calendar.app.google/RF2YRyJifsPzjbDj8) · [문의하기](https://phone.shingihou.com/support/contact)
+
+> [!IMPORTANT]
+> **이 repository의 공개, clone 또는 Skill 설치에는 SGH Phone 무료 통화나 무료 대행 서비스가 포함되지 않습니다.**
+> SGH의 실제 전화, 예약, 변경, 취소 및 사람의 처리는 유료 서비스입니다. 유효한 계약, 선결제 크레딧 또는 발행자가 비용을 부담하는 해당 서비스용 SGH Pass가 확인되지 않으면 실행 대기열에 들어가지 않습니다.
+
+## 무료 공개 영역과 유료 실행 영역
+
+| 무료 공개·홍보 기능 | SGH 유료 실행 서비스 |
+|---|---|
+| README, 사례, 공개 문서 열람 | SGH의 외부 전화 |
+| 로컬 Skill 설치 | 실제 예약, 변경, 취소 |
+| 요청 내용과 상담 메모 정리 | 사람의 검토와 후속 처리 |
+| 부작용 없는 기능·적합성 확인 | Twilio, 음성 AI 또는 운영 인력이 필요한 작업 |
 
 ## AI에게 이렇게 말해 보세요
 
@@ -96,7 +109,11 @@ SGH Consultation Brief
 
 ## 중요 안내
 
-로컬 `SKILL.md`만으로는 전화가 실행되지 않습니다. 인증된 Remote MCP에서도 draft는 전화를 걸지 않으며, 사용자가 대상, 목적, 공유 정보, 시간 및 비용을 명시적으로 승인한 후에만 `confirm_assistance_request`가 비동기 실행을 대기열에 넣습니다. `QUEUED`나 `CALLING`은 예약 확정을 의미하지 않습니다.
+로컬 `SKILL.md`만으로는 전화가 실행되지 않습니다. Remote MCP에서도 draft는 전화를 걸지 않습니다. 유효한 유료 계약, 선결제 크레딧 또는 발행자 부담 SGH Pass를 먼저 검증하고 사용자가 대상, 목적, 공유 정보, 시간과 비용을 명시적으로 승인해야만 실행을 대기열에 넣을 수 있습니다. `QUEUED`나 `CALLING`은 예약 확정을 의미하지 않습니다.
+
+- 이 repository에는 SGH 전화 크레딧이 포함되지 않습니다.
+- 유료 자격이 없으면 `ENTITLEMENT_REQUIRED`를 반환하고 전화나 인력 업무를 만들지 않습니다.
+- SGH Pass는 범위가 제한된 유료·후원 자격이며 공개 무료 Token이 아닙니다.
 
 - 실제 대응 가능 여부는 SGH가 별도로 확인합니다.
 - 가격, 영업시간, 예약 가능 여부, 의료기관 접수 조건을 추측하지 않습니다.
@@ -123,6 +140,14 @@ SGH Phone은 일본어 전화 접수, IVR, 통화 기록, 요약, 담당자 알�
 - 소규모 팀으로도 전화와 후속 대응을 지속하고 싶은 기업
 
 SGH는 기업 도입 상담도 제공합니다.
+
+## Menu Bridge 같은 홍보용 Skill
+
+Menu Bridge는 메뉴, FAQ, 언어 안내와 요청 정리를 무료로 제공하는 `Powered by SGH` 홍보 입구로 사용할 수 있습니다. 실제 전화, 예약, 변경, 취소와 사람의 처리는 SGH 유료 절차로 전환됩니다. 홍보용 Pass를 SGH Phone 크레딧으로 사용할 수 없습니다.
+
+## 오픈소스 라이선스와 서비스 이용은 다릅니다
+
+MIT License는 repository 코드에만 적용됩니다. SGH Phone 통화, 대행, 사람의 서비스, 상표 또는 브랜드 자산 사용 권한은 포함하지 않습니다.
 
 ## 공식 링크
 

@@ -20,6 +20,8 @@ codex mcp login sgh
 
 Keep confirmation、cancel、handoff and Pass redemption in prompt approval mode.
 
+Installing or connecting the Skill grants no SGH service credit. Clients must treat missing `commercial.execution_eligible=true` or `ENTITLEMENT_REQUIRED` as a hard stop and must not retry confirmation as a way to bypass payment.
+
 ## Claude Code
 
 ```bash

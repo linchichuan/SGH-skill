@@ -65,3 +65,7 @@ SGH Phone → Twilio / voice runtime → signed callback
 ## Production truth に関する注意
 
 この監査は repository code と migration の確認であり、production database への migration 適用、deployment SHA、実電話の再試験を証明するものではない。実運用開始前に別途 production verification が必要である。
+
+## 2026-07-20 商業gate追記
+
+公開Skillとローカル相談票は宣伝用途として無料提供できるが、SGHの電話、予約実行、人的対応は有料とする。公開repoは無料通話枠を付与しない。`confirm_assistance_request` はallowlistされた有料または発行元負担のPassを必要とし、直接の `handoff_to_human` はhuman creditの原子的確保が完成するまでblockする。詳細は [commercial-boundary.md](commercial-boundary.md) を参照。

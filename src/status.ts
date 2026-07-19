@@ -51,8 +51,12 @@ export function makeEnvelope(input: {
     status,
     is_final: isFinalStatus(status),
     requires_user_action: requiresUserAction,
-    display_message: input.message || defaultMessage(status),
-    next_action: nextAction(status, requiresUserAction),
+    display_message:
+      input.message ||
+      (input.internalStatus === 'AWAITING_PAYMENT'
+        ? '見積、契約または有料利用資格を確認してください。電話はまだ実行されていません。'
+        : defaultMessage(status)),
+    next_action: nextAction(status, requiresUserAction, input.internalStatus),
     updated_at: input.updatedAt || new Date().toISOString(),
   };
 }
@@ -78,7 +82,17 @@ function defaultMessage(status: PublicStatus): string {
   return messages[status];
 }
 
-function nextAction(status: PublicStatus, userAction: boolean): AssistanceEnvelope['next_action'] {
+function nextAction(
+  status: PublicStatus,
+  userAction: boolean,
+  internalStatus?: string
+): AssistanceEnvelope['next_action'] {
+  if (internalStatus === 'AWAITING_PAYMENT') {
+    return {
+      type: 'CONTACT_SALES',
+      description: 'SGHの正式な見積、契約または対象サービス用SGH Passを確認してください。',
+    };
+  }
   if (status === 'NEEDS_USER_INFO') {
     return { type: 'PROVIDE_INFORMATION', description: '不足している情報を入力してください。' };
   }

@@ -14,7 +14,7 @@
 
 ![SGH Japan Assistant — turn Japan phone and reservation needs into a clear brief](assets/sgh-skill-hero.png)
 
-> **MVP / Private beta** — This repository now includes the Agent Skill, a Streamable HTTP `/mcp` server, nine tools, OAuth resource-server verification, an SGH Service adapter, a Supabase migration, and automated tests. The proposed production URL is not considered live until deployment and authenticated smoke testing are complete.
+> **MVP / Private beta** — The public repository and local Skill are a discovery and request-preparation entry point for SGH. Remote MCP execution tools are not a production service until OAuth, paid entitlement, and production verification are complete.
 
 ## Don't let one phone call in Japanese stop you.
 
@@ -25,6 +25,21 @@ Restaurant reservations, hotel questions, clinic inquiries, and appointment chan
 `SGH Japan Assistant Skill` is a public Agent Skill and Remote MCP gateway that lets compatible agents prepare a draft, obtain explicit confirmation, track execution, and retrieve a verified SGH result.
 
 [Visit SGH Phone](https://phone.shingihou.com) · [Book an initial consultation](https://calendar.app.google/RF2YRyJifsPzjbDj8) · [Contact us](https://phone.shingihou.com/support/contact)
+
+> [!IMPORTANT]
+> **Public access to this repository, cloning it, or installing the Skill does not include free SGH Phone calls or free assistance.**
+> Calls, reservations, changes, cancellations, and human handling by SGH are paid services. A request is never queued without an active contract, prepaid credit, or a service-scoped SGH Pass funded by its issuer.
+
+## Free public layer vs. paid execution
+
+| Free public and promotional layer | Paid SGH execution service |
+|---|---|
+| README, examples, and public documentation | Outbound calls by SGH |
+| Local Skill installation | Real reservations, changes, and cancellations |
+| Request preparation and consultation briefs | Human handling and follow-up |
+| Side-effect-free capability checks | Actions using Twilio, voice AI, or SGH operators |
+
+The public layer helps people discover SGH and prepare a useful request. Anything that creates phone or human-operating cost requires verified paid entitlement first.
 
 ## Just ask your AI
 
@@ -96,7 +111,11 @@ SGH Consultation Brief
 
 ## Important boundaries
 
-The local `SKILL.md` alone never places a call. In the authenticated Remote MCP, draft creation has no call side effect; only `confirm_assistance_request` may queue execution after the user approves the exact target, goal, shared data, timing, and fee. `QUEUED` and `CALLING` never mean a reservation is confirmed.
+The local `SKILL.md` alone never places a call. In Remote MCP, draft creation also has no call side effect. Before execution can be queued, SGH must verify an active paid contract, prepaid credit, or an issuer-funded SGH Pass for the exact service, and the user must approve the target, goal, shared data, timing, and fee. `QUEUED` and `CALLING` never mean a reservation is confirmed.
+
+- This repository includes no SGH call credit.
+- Without paid entitlement, the service must return `ENTITLEMENT_REQUIRED` and create no call or human task.
+- SGH Pass is a scoped paid or sponsored entitlement, not a public free token.
 
 - SGH confirms whether the request can actually be handled.
 - The Skill does not invent prices, opening hours, availability, or clinic acceptance rules.
@@ -123,6 +142,14 @@ SGH Phone is a B2B phone operations platform for Japanese-language reception, IV
 - Keep phone operations and follow-up moving with a small team
 
 SGH also provides implementation consultations for businesses.
+
+## Promotional Skills such as Menu Bridge
+
+Menu Bridge can offer menus, FAQs, language guidance, and request preparation for free as a `Powered by SGH` discovery surface. Real calls, bookings, changes, cancellations, and human handling still enter SGH's paid flow. Promotional Passes cannot be reused as SGH Phone credit.
+
+## Open-source license does not include service credit
+
+The MIT License applies to repository code only. It does not grant SGH Phone calls, assistance, human service, trademark rights, or permission to reuse SGH brand assets.
 
 ## Official links
 

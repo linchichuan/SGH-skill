@@ -29,6 +29,9 @@ export const NextActionSchema = z
       'WAIT',
       'VIEW_RESULT',
       'CONTACT_SUPPORT',
+      'REVIEW_QUOTE',
+      'COMPLETE_PAYMENT',
+      'CONTACT_SALES',
       'NONE',
     ]),
     description: z.string(),
@@ -43,6 +46,19 @@ export const AssistanceEnvelopeSchema = z.object({
   display_message: z.string().min(1),
   next_action: NextActionSchema,
   updated_at: z.string().datetime({ offset: true }),
+  commercial: z
+    .object({
+      service_execution: z.literal('paid'),
+      repository_access: z.string().optional(),
+      free_call_credits_included: z.literal(0),
+      execution_eligible: z.boolean(),
+      funding_status: z.string(),
+      funding_source: z.string().nullable().optional(),
+      requires_quote: z.boolean().optional(),
+    })
+    .optional(),
+  action_blocked: z.boolean().optional(),
+  error_code: z.string().optional(),
 });
 
 export type AssistanceEnvelope = z.infer<typeof AssistanceEnvelopeSchema>;

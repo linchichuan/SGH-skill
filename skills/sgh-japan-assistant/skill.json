@@ -1,8 +1,8 @@
 {
   "name": "sgh-japan-assistant",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "SGH Japan Phone & Reservation Assistant",
-  "description": "Create, confirm, track and retrieve results for SGH Japan phone assistance.",
+  "description": "Prepare SGH Japan phone requests and, after verified paid entitlement and explicit approval, confirm, track and retrieve results.",
   "license": "MIT",
   "languages": ["ja", "zh-TW", "en"],
   "mcp": {

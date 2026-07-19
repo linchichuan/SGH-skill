@@ -1,6 +1,6 @@
 {
   "name": "@sgh/japan-assistant-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "type": "module",
   "description": "Public Agent Skill and Remote MCP gateway for SGH Japan phone assistance",

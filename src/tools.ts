@@ -27,12 +27,28 @@ const envelopeOutput = {
         'WAIT',
         'VIEW_RESULT',
         'CONTACT_SUPPORT',
+        'REVIEW_QUOTE',
+        'COMPLETE_PAYMENT',
+        'CONTACT_SALES',
         'NONE',
       ]),
       description: z.string(),
     })
     .nullable(),
   updated_at: z.string(),
+  commercial: z
+    .object({
+      service_execution: z.literal('paid'),
+      repository_access: z.string().optional(),
+      free_call_credits_included: z.literal(0),
+      execution_eligible: z.boolean(),
+      funding_status: z.string(),
+      funding_source: z.string().nullable().optional(),
+      requires_quote: z.boolean().optional(),
+    })
+    .optional(),
+  action_blocked: z.boolean().optional(),
+  error_code: z.string().optional(),
 };
 
 const idempotencyKey = z
@@ -71,6 +87,30 @@ function normalizeGatewayResponse(value: GatewayResponse): Record<string, unknow
     );
   }
   return value;
+}
+
+function normalizePaidExecutionResponse(value: GatewayResponse): Record<string, unknown> {
+  const normalized = normalizeGatewayResponse(value);
+  if (
+    ['QUEUED', 'CALLING', 'WAITING_FOR_BUSINESS', 'HUMAN_REVIEW'].includes(
+      String(normalized.status)
+    )
+  ) {
+    const commercial = normalized.commercial;
+    if (
+      !commercial ||
+      typeof commercial !== 'object' ||
+      (commercial as Record<string, unknown>).execution_eligible !== true ||
+      (commercial as Record<string, unknown>).free_call_credits_included !== 0
+    ) {
+      throw new GatewayError(
+        'SGH Service did not prove paid entitlement; no execution result was accepted.',
+        502,
+        'INVALID_COMMERCIAL_CONTRACT'
+      );
+    }
+  }
+  return normalized;
 }
 
 function failure(error: unknown, context: ToolContext): ToolResult {
@@ -135,7 +175,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     },
     {
       instructions:
-        'A draft never places a call. Only confirm_assistance_request may queue execution after explicit user confirmation. QUEUED or CALLING never means a reservation is confirmed. Never invent availability or results. Keep personal data minimal and do not accept medical records, card data, passwords, passport data, or emergency requests.',
+        'The public repository includes zero SGH call or human-service credits. A draft never places a call. Only confirm_assistance_request may queue execution after verified paid entitlement and explicit user confirmation. QUEUED or CALLING never means a reservation is confirmed. Never invent availability or results. Keep personal data minimal and do not accept medical records, card data, passwords, passport data, or emergency requests.',
     }
   );
 
@@ -206,7 +246,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     'create_assistance_draft',
     {
       title: 'Create assistance draft',
-      description: 'Create a reviewable SGH phone-assistance draft. This tool must never place a call. The result shows target, phone, goal, approved personal data, missing data, fee, and requires_confirmation=true.',
+      description: 'Idempotently create a reviewable SGH phone-assistance draft. This tool must never place a call or grant service credit. The result shows target, phone, goal, approved personal data, missing data, fee, commercial status, and requires_confirmation=true.',
       inputSchema: {
         task_type: z.enum(['PHONE_INQUIRY', 'RESERVATION', 'RESCHEDULE', 'CANCELLATION']),
         target: z.object({
@@ -221,6 +261,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
         result_language: z.enum(['ja', 'zh-TW', 'en']),
         approved_personal_data: z.record(z.string(), z.string().max(500)).default({}),
         constraints: z.array(z.string().max(500)).max(20).optional(),
+        idempotency_key: idempotencyKey,
       },
       outputSchema: {
         ...envelopeOutput,
@@ -235,17 +276,18 @@ export function createSghMcpServer(context: ToolContext): McpServer {
       annotations: {
         readOnlyHint: false,
         destructiveHint: false,
-        idempotentHint: false,
+        idempotentHint: true,
         openWorldHint: false,
       },
       _meta: { securitySchemes: writeSecurity },
     },
-    async (input) =>
+    async ({ idempotency_key, ...input }) =>
       run(context, async () =>
         normalizeGatewayResponse(
           await context.gateway.createDraft(
             requireScopes(context.auth, ['requests:write']),
-            input
+            input,
+            idempotency_key
           )
         )
       )
@@ -255,7 +297,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     'confirm_assistance_request',
     {
       title: 'Confirm and queue assistance',
-      description: 'After the user explicitly approves the exact target, goal, personal data, timing, and fee, atomically confirm the draft and queue execution. A successful response means queued, not reservation confirmed.',
+      description: 'After SGH verifies a paid contract, prepaid credit, or issuer-funded service-scoped Pass and the user explicitly approves the exact target, goal, personal data, timing, and fee, atomically reserve entitlement and queue execution. Without entitlement, create no side effect.',
       inputSchema: {
         request_id: z.string().min(1).max(160),
         contract_version: z.number().int().positive(),
@@ -273,7 +315,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     },
     async ({ request_id, contract_version, idempotency_key }) =>
       run(context, async () =>
-        normalizeGatewayResponse(
+        normalizePaidExecutionResponse(
           await context.gateway.confirm(
             requireScopes(context.auth, ['requests:write']),
             request_id,
@@ -374,7 +416,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     'handoff_to_human',
     {
       title: 'Handoff to SGH staff',
-      description: 'Create a deduplicated SGH staff review for a complex or sensitive task. This does not itself place a call.',
+      description: 'Request paid SGH staff handling. Public v1 must keep this blocked until service-scoped human entitlement is verified and human credit can be reserved atomically.',
       inputSchema: {
         request_id: z.string().min(1).max(160),
         reason: z.string().min(3).max(1_000),
@@ -392,7 +434,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     },
     async ({ request_id, reason, idempotency_key }) =>
       run(context, async () =>
-        normalizeGatewayResponse(
+        normalizePaidExecutionResponse(
           await context.gateway.handoff(
             requireScopes(context.auth, ['requests:write']),
             request_id,
@@ -407,7 +449,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     'redeem_sgh_pass',
     {
       title: 'Redeem SGH Pass',
-      description: 'Atomically redeem a one-time or limited-use SGH Pass. The opaque token is hashed before storage and must not contain personal or medical data.',
+      description: 'Atomically redeem a one-time or limited-use SGH Pass. A Pass must be issuer-funded and restricted by tenant, service scope, validity and allowance; discovery-only Passes never authorize SGH Phone or human handling.',
       inputSchema: {
         token: z.string().min(24).max(512),
         idempotency_key: idempotencyKey,
