@@ -48,6 +48,19 @@
 - Stripe test authorizationを実電話のfundingとして使用しない。
 - 実電話関連flagは、live payment、callback、取消raceを検証するまで有効化しない。
 
+## 実装済みの商業gate（未deploy）
+
+SGH Service backendの現在の実装ブランチには、次の防止策を追加している。ただし、migration、OAuth及び本番deploymentの検証が完了するまでは、本番提供済みとは表現しない。
+
+- 一つの`request_id`、`agent_task_id`及び`quote_id`を固定した見積snapshot
+- Stripe live authorization又は対象サービス用Passを同じrequestへ原子的にreserve
+- Passのtenant、issuer、plan、service scope、有効期間及び残高のtransaction内再検証
+- task、call attempt、human workのreserve／consume／release ledger
+- 同一idempotency keyによる重複控除、重複発信及び重複返却の防止
+- 実行開始前取消時の決済承認取消又は未使用Pass枠返却
+- 古い非quote confirm APIからの有料実行をblock
+- OAuth tokenのissuer、audience、signature、expiry、required claims及びscopeのfail-closed検証
+
 ## SGH Pass
 
 SGH Passは無料Tokenではなく、費用負担者と利用範囲を表すentitlementである。
@@ -71,13 +84,12 @@ Menu Bridgeは宣伝・発見型Skillとして運用する。
 
 ## 正式公開までの残項目
 
-- 固定 `quote_id`、`quote_version`、金額、通貨、期限、適用条件
-- Stripe liveまたは契約請求とのrequest単位のbinding
-- task、call、humanの個別credit ledger
-- Passのtenant、scope、plan、issuer funding検証
-- 原子的なentitlement reserve／release／refund
-- 未接続、話中、再試行、取消時の課金条件
-- Terms、Privacy、料金・取消方針の正式公開ページ
-- 「未付費confirmでcall attempt／outboxが0件」の自動テスト
+- SGH Assistantの標準税込料金、未接続、話中、再試行及び人的対応の具体的課金条件
+- Terms、Privacy、料金・取消方針の法務確認、施行日及び正式公開URL
+- Production OAuth provider、client registration、member link及びrevoke運用
+- Supabase production migration、issuer master及び対象Passの承認済み初期設定
+- Zeaburへ対象backend commitをdeployし、`/mcp`とOAuth metadataを200にする
+- test numberによるcallback、取消race及びprovider evidenceのcontrolled E2E
+- 本番monitor、アラート、operator runbook及び料金・額度照合
 
 これらが完了するまでは、GitHub公開を本番MCPの提供開始と表現しない。

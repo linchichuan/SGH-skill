@@ -23,7 +23,8 @@ create_assistance_draft
      └─ no phone side effect
 
 confirm_assistance_request
-  └─ validate OAuth scope + paid entitlement + explicit_confirmation + contract version
+  └─ validate OAuth scope + exact quote_id + explicit_confirmation + contract version
+  └─ bind quote to one request / task / owner / tenant / OAuth issuer / terms version
   └─ validate tenant / service / plan / call or human scope
   └─ atomically reserve the applicable paid or sponsor-funded credit
   └─ atomic idempotency claim
@@ -70,6 +71,6 @@ Unknown internal/provider states fail into `HUMAN_REVIEW`; they never become `CO
 
 ## Phase boundaries
 
-- Phase 1: public discovery、local consultation brief、paid-entitlement contract、private beta for funded non-sensitive actions.
-- Phase 2: cancellation/rescheduling、Pass management、LINE/Email result notification、self-service payment quote.
+- Phase 1: public discovery、local consultation brief、request-bound quote and paid-entitlement contract、private beta for funded non-sensitive actions.
+- Phase 2: self-service checkout、rescheduling、Pass management及びLINE/Email result notification.
 - Phase 3: medical vertical with separate scopes、consent、retention and compliance review.

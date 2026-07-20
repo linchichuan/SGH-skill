@@ -6,7 +6,7 @@
   `https://mcp.shingihou.com/mcp`
 - OAuth 2.1 authorization server supporting authorization code + PKCE S256 and MCP resource binding
 - Private SGH Service deployment with `/api/service/mcp`
-- `20260718150000_sgh_mcp_gateway.sql` applied after the existing Agent Platform migrations
+- `20260718150000_sgh_mcp_gateway.sql` and `20260720160000_sgh_mcp_commercial_funding.sql` applied after the existing Agent Platform migrations
 - Secret manager entries for OAuth JWKS configuration and the SGH Service internal credential
 - An explicit allowlist of paid or sponsor-funded MCP Pass plans; an empty allowlist blocks all execution
 
@@ -50,6 +50,22 @@ Then verify:
 11. An unpaid confirm creates zero call attempts、outbox events and human handoffs
 12. `SGH_RESERVE_MEMBER_CALL_CREDITS_ENABLED=false` for public MCP traffic
 13. Stripe test authorization cannot fund a real production call
+14. A quote from another request、tenant、issuer or expired terms version is rejected
+15. Human assignment without reserved human credit is rejected and creates no consume ledger event
+
+Safe OAuth smoke test（does not confirm, redeem, cancel, hand off, or call）:
+
+```bash
+MCP_BASE_URL=https://mcp.shingihou.com pnpm smoke:mcp-oauth
+```
+
+After anonymous metadata/challenge checks pass, provide a short-lived production test token through the deployment secret shell only:
+
+```bash
+MCP_BASE_URL=https://mcp.shingihou.com MCP_OAUTH_TOKEN='***' pnpm smoke:mcp-oauth
+```
+
+Do not paste the token into an issue, README, CI log, or shell history shared with others.
 
 ## Release gate
 
