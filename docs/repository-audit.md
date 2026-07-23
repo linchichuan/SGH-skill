@@ -122,3 +122,14 @@ Remote MCPの実行面は引き続き `PHONE_INQUIRY`、`RESERVATION`、`RESCHED
 | MS Platform | 公開mock Demo、tenant-aware LINE／LIFF／MyPage／通知／video／selected payment path | productized pre-pilot。実運用は個別導入・初期設定後 |
 
 Medical Supporter Official LINEは患者側の発見・相談入口、MS Platformは医療機関側の運用layer、SGH Skillは両者を説明してNo-PHI Briefと公開Demoへつなぐ役割とする。公開SkillからLINE送信、Rich Menu公開、患者登録、病歴upload、LIFF予約、診療入室、payment又は外部AI処理を実行しない。
+
+## 2026-07-24 Rich Menu V6 再確認
+
+Medical Supporter／醫療助手の最新Rich Menu V6について、production用画像、preview、LINE Official Account上の保存状態及び各6件のURI actionを再確認した。V5の画像と説明を公開repositoryから差し替えた。
+
+| LINE入口 | V6で確認した表示入口 | 公開Skillでの扱い |
+|---|---|---|
+| Medical Supporter Official LINE | 日本の医療機関、MyPage、案内に従う医療資料upload、AI即時翻訳、SGH Service | MyPageはMVP／連携整備中。医療資料は認証済み正式導線のみ。公開Skillでは受領・uploadしない |
+| 醫療助手 LINE | 日本の医療機関、案内に従う医療資料upload、AI即時翻訳、費用・サービス、SGH Service | 翻訳はコミュニケーション補助。医療資料の非公開upload先は公開repositoryへ記載しない |
+
+Medical Supporter Official LINEと醫療助手 LINEは別アカウントである。公開READMEでは各add-friend URLを分け、Medical Supporterのリンクが醫療助手へ誤遷移していた状態を修正した。Rich Menu表示は、電話、予約、人的作業、外部AI又はその他有料機能の無料利用権を付与しない。

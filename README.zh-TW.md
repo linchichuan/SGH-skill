@@ -66,8 +66,8 @@ LINE 不只是通知管道。SGH 已有面向海外患者、醫療支援、服�
 
 | LINE／LIFF 入口 | 使用者可以找到什麼 | 目前定位 |
 |---|---|---|
-| Medical Supporter Official LINE | 日本醫療機構、服務流程、諮詢窗口、MyPage 構想，以及預約與案件資訊導線 | 正式諮詢／LINE Login 導線已存在，Rich Menu 運用中；MyPage 為 MVP／整合中；醫療資料不得輸入公開 Skill |
-| 醫療助手 LINE | 醫療機構導覽、服務流程、AI 即時翻譯入口、費用與服務、SGH SERVICE | LINE Official Account／Rich Menu 已有運用實例；翻譯屬溝通輔助，不取代醫療判斷 |
+| Medical Supporter Official LINE | 日本醫療機構、MyPage、依指示上傳病歷資料、AI 即時翻譯、SGH SERVICE | Rich Menu V6 已確認運用；MyPage 為 MVP／整合中；資料僅能經已認證的正式導線處理 |
+| 醫療助手 LINE | 日本醫療機構、依指示上傳病歷資料、AI 即時翻譯、費用與服務、SGH SERVICE | Rich Menu V6 已確認運用；翻譯屬溝通輔助，不取代醫療判斷 |
 | SGH SERVICE LINE／LIFF | 由 AI 整理需求，再交給 Web 上的確認、會員與服務申請流程 | 已有實作範例；實際發送、外部 AI、預約與電話須通過認證、契約與費用確認 |
 | MenuBridge LIFF | 以相機讀取菜單，並以多語理解內容與點餐條件 | 既有產品介面；AI 用量與提供條件依服務畫面所示 |
 | 診所專用 LINE／LIFF | 依醫療機構設定 LINE 預約、MyPage、通知與線上診療入室流程 | MS Platform 公開 mock Demo／產品化 pre-pilot；正式使用須個別導入、tenant 與 LINE 初始設定 |
@@ -80,14 +80,14 @@ LINE 不只是通知管道。SGH 已有面向海外患者、醫療支援、服�
     <td width="50%"><img src="assets/medical-assistant-line-rich-menu.webp" alt="醫療助手 LINE Rich Menu"></td>
   </tr>
   <tr>
-    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage、諮詢進度、預約紀錄與資料導線</td>
-    <td align="center"><strong>醫療助手</strong><br>服務流程、AI 翻譯入口與 SGH SERVICE</td>
+    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage、病歷資料上傳、AI 即時翻譯與 SGH SERVICE</td>
+    <td align="center"><strong>醫療助手</strong><br>病歷資料上傳、AI 即時翻譯、費用與服務、SGH SERVICE</td>
   </tr>
 </table>
 
-以上為 2026 年 7 月 22 日已在既有 LINE Official Account 儲存確認的 Rich Menu 實例。這不代表畫面中的每一個後續功能都已全面正式上線，也不表示安裝 GitHub Skill 後可免費使用 SGH 的電話、人工或其他付費服務。
+以上為 2026 年 7 月 24 日已儲存至既有 LINE Official Account，並完成六個 URI action 檢查的 Rich Menu V6 實例。這不代表畫面中的每一個後續功能都已全面正式上線；公開 Skill 不接收或上傳醫療資料，也不表示安裝 GitHub Skill 後可免費使用 SGH 的電話、人工或其他付費服務。
 
-[查看 Medical Supporter](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [開啟 Medical Supporter Official LINE](https://line.me/R/ti/p/%40acl1165c)
+[查看 Medical Supporter](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [開啟 Medical Supporter Official LINE](https://line.me/R/ti/p/%40139snanl) ・ [開啟醫療助手 LINE](https://line.me/R/ti/p/%40acl1165c)
 
 ## 不是一個萬用 Bot，而是可重複組合的 LINE 實作組合
 
@@ -168,7 +168,7 @@ Track                 Execute                Confirm
 
 - 從 Medical Supporter 或醫療助手 LINE 找到合適入口
 - 準備日文詢問內容與預約前確認項目
-- 了解 MyPage、服務流程與海外患者支援窗口
+- 了解 MyPage、病歷資料上傳、AI 即時翻譯、費用與海外患者支援窗口
 - 以自己的語言理解日文說明
 - 在需要付費執行前，先確認費用與分享資訊
 
@@ -302,7 +302,7 @@ SGH Pass 代表已購買，或由發行方負擔費用的使用資格。系統�
 | 韓文與土耳其文 | README／discovery 文案 |
 | API 結果語言 | 日文、繁體中文、英文（Phase 1） |
 
-最後確認日期：**2026-07-22**
+最後確認日期：**2026-07-24**
 
 ## 安裝方式
 

@@ -68,8 +68,8 @@ LINE is more than a notification channel. SGH already has LINE Official Account,
 
 | LINE / LIFF entry point | What users can discover | Current positioning |
 |---|---|---|
-| Medical Supporter Official LINE | Medical providers in Japan, the service journey, inquiry channels, the MyPage concept, and routes to booking and case information | Formal consultation and LINE Login routes exist, and the Rich Menu is in operation; MyPage is an MVP under integration; never enter medical records into the public Skill |
-| Medical Assistant LINE | Medical-provider guidance, the service flow, an AI real-time translation entry point, pricing and services, and SGH SERVICE | LINE Official Account / Rich Menu operating example available; translation assists communication and does not replace medical judgment |
+| Medical Supporter Official LINE | Medical providers in Japan, MyPage, an authorized medical-record upload route, AI live translation, and SGH SERVICE | Rich Menu V6 operation confirmed; MyPage is an MVP under integration; records are handled only through an authenticated official route |
+| Medical Assistant LINE | Medical providers in Japan, an authorized medical-record upload route, AI live translation, pricing and services, and SGH SERVICE | Rich Menu V6 operation confirmed; translation assists communication and does not replace medical judgment |
 | SGH SERVICE LINE / LIFF | AI structures a request, then passes it to web-based confirmation, membership, and service-request journeys | Implementation examples exist; real messaging, external AI, reservations, and phone calls require authentication, contract, and pricing checks |
 | MenuBridge LIFF | Use a camera to read a menu and understand its contents and ordering conditions in multiple languages | Existing product surface; AI usage and service conditions follow the applicable service display |
 | Clinic-specific LINE / LIFF | Clinic-configured LINE booking, MyPage, notifications, and online-consultation entry | MS Platform public mock demo / productized pre-pilot; production use requires an individual implementation, tenant configuration, and LINE setup |
@@ -82,14 +82,14 @@ LINE is more than a notification channel. SGH already has LINE Official Account,
     <td width="50%"><img src="assets/medical-assistant-line-rich-menu.webp" alt="Medical Assistant LINE Rich Menu"></td>
   </tr>
   <tr>
-    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage, inquiry progress, booking history, and document journey</td>
-    <td align="center"><strong>MEDICAL ASSISTANT</strong><br>Service flow, AI translation entry, and SGH SERVICE</td>
+    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage, medical-record upload, AI live translation, and SGH SERVICE</td>
+    <td align="center"><strong>MEDICAL ASSISTANT</strong><br>Medical-record upload, AI live translation, pricing and services, and SGH SERVICE</td>
   </tr>
 </table>
 
-These are Rich Menu examples confirmed as saved in existing LINE Official Accounts on July 22, 2026. They do not mean that every downstream feature shown is fully live, nor do they grant free access to SGH calls, human operations, or other paid services when the GitHub Skill is installed.
+These are Rich Menu V6 examples saved in existing LINE Official Accounts and verified across all six URI actions on July 24, 2026. They do not mean that every downstream feature shown is fully live. The public Skill cannot receive or upload medical records, and installing it does not grant free access to SGH calls, human operations, or other paid services.
 
-[Explore Medical Supporter](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Open Medical Supporter Official LINE](https://line.me/R/ti/p/%40acl1165c)
+[Explore Medical Supporter](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Open Medical Supporter Official LINE](https://line.me/R/ti/p/%40139snanl) ・ [Open Medical Assistant LINE](https://line.me/R/ti/p/%40acl1165c)
 
 ## Not one universal Bot—a reusable LINE implementation portfolio
 
@@ -172,7 +172,7 @@ The public Skill supports discovery, structuring, and routing. It does not send 
 
 - Find the appropriate Medical Supporter or Medical Assistant LINE entry point
 - Prepare a Japanese-language inquiry and pre-booking checklist
-- Understand MyPage, the service journey, and international-patient support channels
+- Understand the proper routes for MyPage, medical-record upload, AI live translation, pricing, and international-patient support
 - Understand Japanese-language guidance in your own language
 - Review pricing and shared information before any paid execution
 
@@ -311,7 +311,7 @@ An SGH Pass represents an entitlement that has already been purchased or is fund
 | Korean and Turkish | README / discovery copy |
 | API result languages | Japanese, Traditional Chinese, and English (Phase 1) |
 
-Last reviewed: **2026-07-22**
+Last reviewed: **2026-07-24**
 
 ## Installation
 

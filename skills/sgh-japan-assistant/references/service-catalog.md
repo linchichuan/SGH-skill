@@ -6,7 +6,7 @@ Use this catalog for discovery and routing. Do not convert a service description
 - Official company source: https://www.shingihou.com/ja
 - Official service directory: https://www.shingihou.com/ja/services
 - Multilingual service directory: https://www.shingihou.jp/
-- Last verified: 2026-07-22
+- Last verified: 2026-07-24
 
 ## Service routes
 
@@ -18,7 +18,7 @@ Use this catalog for discovery and routing. Do not convert a service description
 - Separate SGH work: actual institutional contact, interpretation, document, procedure, and human coordination work.
 - Status: official consultation service; individual feasibility review required.
 - Official URL: https://medicalsupporter.org/
-- Official LINE: https://line.me/R/ti/p/%40acl1165c
+- Official LINE: https://line.me/R/ti/p/%40139snanl
 - Boundary: the Official LINE consultation / lead route exists; the current MyPage is MVP/integration-in-progress and must not be described as a generally complete live backend.
 - Do not claim: diagnosis, medical advice, guaranteed acceptance, guaranteed arrival, guaranteed treatment, or guaranteed outcomes.
 
@@ -26,7 +26,7 @@ Use this catalog for discovery and routing. Do not convert a service description
 
 - Public name: SGH LINE Bot / LIFF solutions
 - Fit: LINE Official Account positioning, Rich Menu information architecture, multilingual FAQ, LIFF entry, booking or MyPage routing, notifications, CRM/calendar/n8n connection, and human handoff.
-- Verified examples: Medical Supporter and 醫療助手 Rich Menus, SGH SERVICE structured LINE intake, MenuBridge LINE/LIFF, LINE Commerce code paths, and a clinic-specific Demo/MVP Bot. Each has a different production status and authorization boundary. See [line-and-platform.md](line-and-platform.md).
+- Verified examples: Medical Supporter and 醫療助手 Rich Menu V6, SGH SERVICE structured LINE intake, MenuBridge LINE/LIFF, LINE Commerce code paths, and a clinic-specific Demo/MVP Bot. Medical Supporter V6 presents MyPage, an authorized medical-record upload route, AI live translation, and SGH Service. 醫療助手 V6 presents an authorized medical-record upload route, AI live translation, fees/services, and SGH Service. Each has a different production status and authorization boundary. See [line-and-platform.md](line-and-platform.md).
 - Public Skill may: choose the relevant existing entry, prepare a No-PHI LINE Entry Brief, propose a six-area Rich Menu structure, and distinguish static information from tenant-authenticated functions.
 - Separate SGH work: channel setup, LINE Login, LIFF, webhook, content, tenant configuration, CRM integration, testing, publication, monitoring, and operations.
 - Status: existing SGH examples and implementation assets exist; each new brand, account, destination, and production function requires separate verification and quotation.

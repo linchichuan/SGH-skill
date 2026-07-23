@@ -2,7 +2,7 @@
 
 Use this reference when the user mentions LINE, LIFF, Rich Menu, Medical Supporter LINE, 醫療助手, SGH SERVICE, MenuBridge, MS Platform, MyPage, clinic booking, or online consultation.
 
-Last verified: 2026-07-22
+Last verified: 2026-07-24
 
 ## Route selection
 
@@ -18,18 +18,19 @@ Last verified: 2026-07-22
 
 ### Medical Supporter Official LINE
 
-- Verified public surface: an existing LINE Official Account, public add-friend route, LINE Login lead route, privacy/terms pages, and a Rich Menu saved and visually confirmed on 2026-07-22.
-- Visible entry concepts: Japanese medical organizations, consultation, MyPage, case and appointment concepts, instructed medical-record upload, fees/services, and SGH Service.
+- Verified public surface: an existing LINE Official Account, public add-friend route, LINE Login lead route, privacy/terms pages, and Rich Menu V6. The V6 image, thumbnail, and six URI actions were saved and visually verified on 2026-07-24.
+- Visible entry concepts: Japanese medical organizations, MyPage, instructed medical-record upload, AI live translation, and SGH Service.
 - Safe description: an official multilingual consultation and coordination entry for overseas patients.
-- Limit: the current MyPage frontend is MVP/integration-in-progress; do not claim the complete MyPage backend or every Rich Menu destination is generally live. Do not collect a medical record in the public Skill. File upload is only for an authorized user following the service's instructions.
-- Official URLs: https://medicalsupporter.org/ and https://line.me/R/ti/p/%40acl1165c
+- Limit: the current MyPage frontend is MVP/integration-in-progress; do not claim the complete MyPage backend or every Rich Menu destination is generally live. Do not collect a medical record in the public Skill. File upload is only for an authorized user following the service's instructions, and its private destination must not be copied into this public repository.
+- Official URLs: https://medicalsupporter.org/ and https://line.me/R/ti/p/%40139snanl
 
 ### 醫療助手 LINE
 
-- Verified public surface: an existing LINE Official Account and Rich Menu were saved and visually confirmed on 2026-07-22.
-- Visible entry concepts: Japanese medical organizations, service flow, AI live-translation entry, fees/services, and SGH Service.
+- Verified public surface: an existing LINE Official Account and Rich Menu V6. The V6 image, thumbnail, and six URI actions were saved and visually verified on 2026-07-24.
+- Visible entry concepts: Japanese medical organizations, instructed medical-record upload, AI live translation, fees/services, and SGH Service.
 - Safe description: a Traditional-Chinese-facing medical-support and communication entry.
-- Limit: AI translation is communication assistance, not diagnosis, treatment advice, interpretation certification, or a guaranteed real-time service in every context.
+- Limit: AI translation is communication assistance, not diagnosis, treatment advice, interpretation certification, or a guaranteed real-time service in every context. Medical-record upload is available only through the authorized service route; its private destination is intentionally omitted here.
+- Official URL: https://line.me/R/ti/p/%40acl1165c
 
 ### SGH SERVICE / MenuBridge LINE and LIFF
 

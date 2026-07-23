@@ -67,8 +67,8 @@ LINE은 단순한 알림 채널이 아닙니다. SGH는 LINE에서 상담을 접
 
 | LINE/LIFF 입구 | 사용자가 만나는 기능 | 현재 위치 |
 |---|---|---|
-| Medical Supporter Official LINE | 일본 의료기관 안내, 서비스 흐름, 상담 창구, MyPage 구상, 예약·사례 정보로 이어지는 동선 | 공식 상담 입구와 LINE Login 동선이 있으며 Rich Menu 운영 중. MyPage는 MVP/연계 정비 중 |
-| 醫療助手 LINE | 의료기관 안내, 서비스 흐름, AI 실시간 번역 입구, 요금·서비스, SGH SERVICE | LINE Official Account와 Rich Menu 운영 사례가 있음. 번역은 의사소통 보조이며 의료 판단이 아님 |
+| Medical Supporter Official LINE | 일본 의료기관, MyPage, 안내에 따른 의료기록 제출, AI 실시간 번역, SGH SERVICE | Rich Menu V6 운영 확인. MyPage는 MVP/연계 정비 중이며 자료는 인증된 공식 동선에서만 처리 |
+| 醫療助手 LINE | 일본 의료기관, 안내에 따른 의료기록 제출, AI 실시간 번역, 요금·서비스, SGH SERVICE | Rich Menu V6 운영 확인. 번역은 의사소통 보조이며 의료 판단이 아님 |
 | SGH SERVICE LINE/LIFF | AI가 상담을 구조화해 Web 확인, 회원, 요청 동선으로 넘기는 서비스 입구 | 구현 사례 있음. 실제 발송, 외부 AI, 예약, 전화는 인증·계약·요금 확인 후 |
 | MenuBridge LIFF | 카메라로 메뉴를 읽고 다국어로 내용과 주문 조건을 이해하는 입구 | 기존 제품 화면. AI 사용량과 제공 조건은 서비스 화면을 따름 |
 | 클리닉용 LINE/LIFF | LINE 예약, MyPage, 알림, 온라인 진료 입실 동선 | MS Platform의 공개 mock Demo 및 productized pre-pilot. 실사용은 의료기관별 계약·초기 설정 후 |
@@ -81,17 +81,17 @@ LINE은 단순한 알림 채널이 아닙니다. SGH는 LINE에서 상담을 접
     <td width="50%"><img src="assets/medical-assistant-line-rich-menu.webp" alt="의료 조수 LINE Rich Menu"></td>
   </tr>
   <tr>
-    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage·상담 진행·예약 기록·자료 제출 동선</td>
-    <td align="center"><strong>醫療助手</strong><br>서비스 흐름·AI 번역 동선·SGH SERVICE</td>
+    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage·의료기록 제출·AI 실시간 번역·SGH SERVICE</td>
+    <td align="center"><strong>醫療助手</strong><br>의료기록 제출·AI 실시간 번역·요금/서비스·SGH SERVICE</td>
   </tr>
 </table>
 
-위 이미지는 2026년 7월 22일 기존 LINE Official Account에 저장된 것을 확인한 Rich Menu 사례입니다. 각 버튼의 목적지나 전체 MyPage가 모두 production에서 일반 공개되었다는 뜻은 아니며, Skill 설치만으로 해당 기능 또는 SGH 유료 서비스가 무료로 열리지도 않습니다.
+위 이미지는 2026년 7월 24일 기존 LINE Official Account에 저장하고 여섯 개 URI action을 모두 확인한 Rich Menu V6 사례입니다. 각 연결 기능이 모두 production에서 일반 공개되었다는 뜻은 아닙니다. 공개 Skill은 의료기록을 받거나 업로드하지 않으며, 설치만으로 SGH 전화·인력 운영·기타 유료 서비스가 무료로 열리지도 않습니다.
 
 > [!IMPORTANT]
 > 공개 Skill은 LINE 메시지를 보내거나 Rich Menu를 게시하지 않습니다. 환자 계정을 만들거나 의료기록을 업로드하지 않으며, 전화·예약·결제도 실행하지 않습니다. 여기서는 서비스 발견, 요구사항 정리, Brief 작성과 공식 창구 안내까지만 제공합니다.
 
-[Medical Supporter 보기](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Medical Supporter Official LINE 열기](https://line.me/R/ti/p/%40acl1165c)
+[Medical Supporter 보기](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Medical Supporter Official LINE 열기](https://line.me/R/ti/p/%40139snanl) ・ [醫療助手 LINE 열기](https://line.me/R/ti/p/%40acl1165c)
 
 ## 하나의 Bot이 아니라 재사용 가능한 LINE 구현 포트폴리오
 
@@ -171,7 +171,7 @@ Track                 Execute                Route
 - 일본어 문의 내용을 준비하고 싶다
 - 예약, 호텔, 생활 서비스의 확인 항목을 정리하고 싶다
 - 해외 환자 지원의 올바른 상담 창구를 알고 싶다
-- Medical Supporter LINE과 MyPage·서비스 흐름의 입구를 알고 싶다
+- Medical Supporter/醫療助手 LINE에서 MyPage·의료기록 제출·AI 실시간 번역·요금/서비스의 올바른 입구를 알고 싶다
 - 일본어 결과나 안내를 자신의 언어로 이해하고 싶다
 
 ### 기업·클리닉·지자체·숙박 사업자
@@ -292,7 +292,7 @@ SGH Pass는 구매했거나 발행자가 비용을 부담한 이용 자격입니
 | 한국어·터키어 | README / discovery copy만 제공 |
 | API 결과 언어 | 일본어·번체중문·영어(Phase 1) |
 
-최종 확인일: **2026-07-22**
+최종 확인일: **2026-07-24**
 
 ## 설치
 

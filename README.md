@@ -67,8 +67,8 @@ LINEは単なる通知先ではありません。新義豊には、医療支援�
 
 | LINE／LIFF入口 | ユーザーが見つけられるもの | 現在の位置づけ |
 |---|---|---|
-| Medical Supporter Official LINE | 日本の医療機関、サービスの流れ、相談窓口、MyPage構想、予約・案件情報への導線 | 公式相談入口／LINE Login導線あり。Rich Menu運用中。MyPageはMVP・連携整備中 |
-| 醫療助手 LINE | 医療機関案内、サービスフロー、AI即時翻訳への導線、費用・サービス、SGH Service | LINE公式アカウント／Rich Menu運用あり。翻訳はコミュニケーション補助であり医療判断ではない |
+| Medical Supporter Official LINE | 日本の医療機関、MyPage、案内に従う医療資料アップロード、AI即時翻訳、SGH Service | Rich Menu V6運用確認済み。MyPageはMVP・連携整備中。資料は認証済みの正式導線でのみ取り扱う |
+| 醫療助手 LINE | 医療機関案内、案内に従う医療資料アップロード、AI即時翻訳、費用・サービス、SGH Service | Rich Menu V6運用確認済み。翻訳はコミュニケーション補助であり医療判断ではない |
 | SGH SERVICE LINE／LIFF | AIが相談を構造化し、Web上の確認・会員・依頼導線へ渡すサービス入口 | 実装例あり。実送信・外部AI・予約・電話は認証、契約、料金確認後 |
 | MenuBridge LIFF | カメラでメニューを読み取り、多言語で内容や注文条件を理解する入口 | 既存プロダクト面。AI利用量と提供条件はサービス表示に従う |
 | クリニック向けLINE／LIFF | 予約、MyPage、通知、オンライン診療入室を医療機関単位で構成 | MS Platformの公開Demo／MVP。実利用は個別導入とLINE初期設定後 |
@@ -81,14 +81,14 @@ LINEは単なる通知先ではありません。新義豊には、医療支援�
     <td width="50%"><img src="assets/medical-assistant-line-rich-menu.webp" alt="醫療助手 LINE Rich Menu"></td>
   </tr>
   <tr>
-    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage・相談進捗・予約記録・資料導線</td>
-    <td align="center"><strong>醫療助手</strong><br>サービスフロー・AI翻訳導線・SGH Service</td>
+    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage・医療資料アップロード・AI即時翻訳・SGH Service</td>
+    <td align="center"><strong>醫療助手</strong><br>医療資料アップロード・AI即時翻訳・費用／サービス・SGH Service</td>
   </tr>
 </table>
 
-上記2点は2026年7月22日に既存LINE公式アカウントへ保存確認したRich Menuの実例です。画像に表示されるMyPage、資料導線、AI翻訳などは機能別の条件や整備状況があり、すべての遷移先が一般公開済みという意味ではありません。GitHub Skillのインストールだけで無料開放されることもありません。
+上記2点は2026年7月24日に既存LINE公式アカウントへ保存し、6つのURIアクションを確認したRich Menu V6の実例です。画像に表示されるMyPage、資料アップロード、AI翻訳などは機能別の条件や整備状況があり、すべての遷移先が一般公開済みという意味ではありません。公開Skillへ医療資料を入力・アップロードすることはできず、GitHub SkillのインストールだけでSGHの電話、人的対応、その他の有料サービスが無料開放されることもありません。
 
-[Medical Supporterを見る](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Medical Supporter Official LINEを開く](https://line.me/R/ti/p/%40acl1165c)
+[Medical Supporterを見る](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Medical Supporter Official LINEを開く](https://line.me/R/ti/p/%40139snanl) ・ [醫療助手 LINEを開く](https://line.me/R/ti/p/%40acl1165c)
 
 ## 一つのBotではなく、再利用できるLINE実装ポートフォリオ
 
@@ -168,7 +168,7 @@ Track                 Execute                Route
 - 日本語の問い合わせ内容を準備したい
 - 予約、ホテル、生活サービスの確認項目を整理したい
 - 海外患者支援の正しい相談窓口を知りたい
-- Medical SupporterのLINE、MyPage、サービスフローの入口を知りたい
+- Medical Supporter／醫療助手のLINEから、MyPage、医療資料アップロード、AI即時翻訳、費用・サービスの正しい入口を確認したい
 - 日本語の結果や案内を自分の言語で理解したい
 
 ### 企業・クリニック・自治体・宿泊事業者
@@ -228,7 +228,8 @@ Menu Bridge、公開FAQ、サービスカタログは、利用者に役立つ宣
 |---|---|
 | [shingihou.com](https://www.shingihou.com/ja) | 会社情報、公式サービス、責任範囲、法的情報、正式な相談窓口 |
 | [shingihou.jp](https://www.shingihou.jp/) | 多言語のサービス案内、ユースケース、Demo・導入情報 |
-| [Medical Supporter Official LINE](https://line.me/R/ti/p/%40acl1165c) | 海外患者支援についてLINEから相談を始める公式入口 |
+| [Medical Supporter Official LINE](https://line.me/R/ti/p/%40139snanl) | 海外患者支援についてLINEから相談を始める公式入口 |
+| [醫療助手 LINE](https://line.me/R/ti/p/%40acl1165c) | 繁體中文で医療支援、AI即時翻訳、費用・サービスの入口を確認するLINE |
 | [MS Platform](https://ms-platform.shingihou.com/demo) | 医療機関向け患者導線・管理画面の公開mock Demo |
 | [SGH-skill](https://github.com/linchichuan/SGH-skill) | AI Agentがサービスを発見し、相談を整理し、正しい公式入口へ進むための公開パッケージ |
 
@@ -291,7 +292,7 @@ SGH Passは、購入済みまたは発行元負担の利用資格です。tenant
 | 韓国語・トルコ語 | README / discovery copyのみ |
 | API結果言語 | 日本語・繁體中文・英語（Phase 1） |
 
-最終確認日: **2026-07-22**
+最終確認日: **2026-07-24**
 
 ## インストール
 

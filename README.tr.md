@@ -67,8 +67,8 @@ LINE yalnızca bir bildirim kanalı değildir. SGH; talebi LINE'da karşılayan,
 
 | LINE/LIFF girişi | Kullanıcının karşılaştığı işlevler | Güncel konumlandırma |
 |---|---|---|
-| Medical Supporter Official LINE | Japonya'daki sağlık kuruluşları, hizmet akışı, danışma kanalı, MyPage yaklaşımı ve rezervasyon/vaka bilgilerine geçiş | Resmî danışma girişi ve LINE Login akışı mevcut; Rich Menu kullanımda. MyPage MVP/entegrasyon hazırlığı aşamasında |
-| 醫療助手 LINE | Sağlık kuruluşu rehberi, hizmet akışı, AI anlık çeviri girişi, ücret/hizmet bilgisi ve SGH SERVICE | LINE Official Account ve Rich Menu kullanım örneği mevcut. Çeviri iletişimi destekler; tıbbi karar vermez |
+| Medical Supporter Official LINE | Japonya'daki sağlık kuruluşları, MyPage, yönlendirmeye bağlı tıbbi belge yükleme, AI anlık çeviri ve SGH SERVICE | Rich Menu V6 kullanımı doğrulandı. MyPage MVP/entegrasyon aşamasında; belgeler yalnızca kimliği doğrulanmış resmî akışta işlenir |
+| 醫療助手 LINE | Japonya'daki sağlık kuruluşları, yönlendirmeye bağlı tıbbi belge yükleme, AI anlık çeviri, ücret/hizmet bilgisi ve SGH SERVICE | Rich Menu V6 kullanımı doğrulandı. Çeviri iletişimi destekler; tıbbi karar vermez |
 | SGH SERVICE LINE/LIFF | AI'ın talebi yapılandırıp Web doğrulama, üyelik ve başvuru akışına aktardığı hizmet girişi | Uygulama örneği mevcut. Gerçek gönderim, haricî AI, rezervasyon ve telefon; kimlik doğrulama, sözleşme ve ücret kontrolünden sonra |
 | MenuBridge LIFF | Kamerayla menüyü okuyup içeriği ve sipariş koşullarını çok dilli anlamaya yarayan giriş | Mevcut ürün yüzeyi. AI kullanım miktarı ve sunum koşulları hizmet ekranına tabidir |
 | Klinikler için LINE/LIFF | LINE rezervasyonu, MyPage, bildirim ve online görüşmeye giriş akışı | MS Platform public mock demo ve productized pre-pilot. Gerçek kullanım, kuruma özel sözleşme ve başlangıç ayarlarından sonra |
@@ -81,17 +81,17 @@ LINE yalnızca bir bildirim kanalı değildir. SGH; talebi LINE'da karşılayan,
     <td width="50%"><img src="assets/medical-assistant-line-rich-menu.webp" alt="Tıbbi destek LINE Rich Menu"></td>
   </tr>
   <tr>
-    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage, danışma durumu, rezervasyon kaydı ve belge yolu</td>
-    <td align="center"><strong>醫療助手</strong><br>Hizmet akışı, AI çeviri yolu ve SGH SERVICE</td>
+    <td align="center"><strong>MEDICAL SUPPORTER</strong><br>MyPage, tıbbi belge yükleme, AI anlık çeviri ve SGH SERVICE</td>
+    <td align="center"><strong>醫療助手</strong><br>Tıbbi belge yükleme, AI anlık çeviri, ücret/hizmet ve SGH SERVICE</td>
   </tr>
 </table>
 
-Yukarıdaki örneklerin 22 Temmuz 2026 tarihinde mevcut LINE Official Account'lara kaydedildiği doğrulanmıştır. Bu, her düğmenin hedefinin veya tüm MyPage işlevlerinin production ortamında genel kullanıma açık olduğu anlamına gelmez. Skill'i kurmak da bu işlevleri ya da ücretli SGH hizmetlerini ücretsiz hâle getirmez.
+Yukarıdaki Rich Menu V6 örnekleri 24 Temmuz 2026 tarihinde mevcut LINE Official Account'lara kaydedilmiş ve altı URI action doğrulanmıştır. Bu, bağlı her işlevin production ortamında genel kullanıma açık olduğu anlamına gelmez. Herkese açık Skill tıbbi belge almaz veya yüklemez; kurulumu SGH telefonu, insan operasyonları ya da diğer ücretli hizmetleri ücretsiz hâle getirmez.
 
 > [!IMPORTANT]
 > Herkese açık Skill LINE mesajı göndermez veya Rich Menu yayımlamaz. Hasta kaydı oluşturmaz, tıbbi belge yüklemez, telefon etmez, rezervasyon veya ödeme yapmaz. Bu katman yalnızca hizmet keşfi, gereksinim düzenleme, Brief hazırlama ve resmî kanala yönlendirme sağlar.
 
-[Medical Supporter'ı inceleyin](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Medical Supporter Official LINE'ı açın](https://line.me/R/ti/p/%40acl1165c)
+[Medical Supporter'ı inceleyin](https://medicalsupporter.org/?utm_source=github&utm_medium=referral&utm_campaign=sgh_skill) ・ [Medical Supporter Official LINE'ı açın](https://line.me/R/ti/p/%40139snanl) ・ [醫療助手 LINE'ı açın](https://line.me/R/ti/p/%40acl1165c)
 
 ## Tek bir Bot değil, yeniden kullanılabilir bir LINE uygulama portföyü
 
@@ -173,7 +173,7 @@ Durumu ve sonucu izle ← Yalnızca gerektiğinde ← Doğru resmî kanala yöne
 - Japonca bir başvurunun içeriğini hazırlamak isteyenler
 - Rezervasyon, otel ve günlük yaşam hizmetleri için sorulacakları düzenlemek isteyenler
 - Uluslararası hasta desteği için doğru danışma kanalını arayanlar
-- Medical Supporter LINE, MyPage ve hizmet akışının girişini görmek isteyenler
+- Medical Supporter/醫療助手 LINE üzerinden MyPage, tıbbi belge yükleme, AI anlık çeviri ve ücret/hizmet için doğru girişi bulmak isteyenler
 - Japonca bir sonucu veya açıklamayı kendi dillerinde anlamak isteyenler
 
 ### Şirketler, klinikler, yerel yönetimler ve konaklama işletmeleri
@@ -294,7 +294,7 @@ SGH Pass, satın alınmış veya bedeli düzenleyen kuruluş tarafından karşı
 | Korece ve Türkçe | Yalnızca README / discovery copy |
 | API sonuç dilleri | Japonca, Geleneksel Çince ve İngilizce (Phase 1) |
 
-Son doğrulama: **2026-07-22**
+Son doğrulama: **2026-07-24**
 
 ## Kurulum
 
