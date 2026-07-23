@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+dist
+coverage
+.env*
+README*.md
+assets
+docs
+skills
+supabase
+tests

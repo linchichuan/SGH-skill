@@ -1,0 +1,17 @@
+{
+  "name": "sgh-japan-assistant",
+  "version": "0.4.0",
+  "title": "SGH Japan AI & LINE Service Navigator",
+  "description": "Discover verified Shingihou LINE and LIFF entry points, Medical Supporter, MS Platform and other SGH services; prepare safe briefs; and separately enter eligible paid execution flows.",
+  "license": "MIT",
+  "languages": ["ja", "zh-TW", "en", "ko", "tr"],
+  "documentation_languages": ["ja", "zh-TW", "en", "ko", "tr"],
+  "execution_result_languages": ["ja", "zh-TW", "en"],
+  "mcp": {
+    "transport": "streamable-http",
+    "url": "https://mcp.shingihou.com/mcp",
+    "authentication": "oauth2",
+    "deployment_status": "private_beta_not_verified_live"
+  },
+  "entrypoint": "SKILL.md"
+}

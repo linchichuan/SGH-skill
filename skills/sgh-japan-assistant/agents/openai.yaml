@@ -1,4 +1,7 @@
 interface:
-  display_name: "SGH Japan Assistant"
-  short_description: "日本での電話・予約相談をSGHへつなぐ公開Skill"
-  default_prompt: "Use $sgh-japan-assistant to prepare a clear SGH consultation brief for a phone, reservation, or confirmation task in Japan."
+  display_name: "SGH Japan AI & LINE Navigator"
+  short_description: "LINEで受け止め、AIで整理し、SGHの正しい入口へつなぐ"
+  icon_small: "./assets/sgh-icon.svg"
+  icon_large: "./assets/sgh-icon.png"
+  brand_color: "#F57C00"
+  default_prompt: "Use $sgh-japan-assistant to compare the verified Shingihou LINE/LIFF entry points, Medical Supporter, MS Platform and other SGH services, create a concise no-sensitive-data consultation brief, and show the verified official next step. Do not send a LINE message, publish a Rich Menu, register a patient, upload a document, call, book, pay, redeem a Pass, or create a human task unless I separately request a supported action and explicitly confirm its exact authorized and paid terms."
