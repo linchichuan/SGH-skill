@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- SGH Service Backend deployment that exposes the public HTTPS origin
+- SGH Service Backend deployment prepared to expose the public HTTPS origin
   `https://mcp.shingihou.com/mcp`
 - OAuth 2.1 authorization server supporting authorization code + PKCE S256 and MCP resource binding
 - Private SGH Service deployment with `/api/service/mcp`
@@ -14,16 +14,33 @@
 
 Use `env.example` as the key list. Never copy production values into the repository, image, build log or client configuration.
 
-## SGH Service deployment
+## Current production status
 
-The public Streamable HTTP route is mounted in the SGH Service Backend. It
-uses the existing private `/api/service/mcp` control-plane adapter in-process;
-there is no separate Medical Supporter service and no additional public MCP
-container to operate.
+As of 2026-07-22, DNS for `mcp.shingihou.com` resolves to Zeabur and reaches the
+SGH Service Backend, but `GET /health`, OAuth protected-resource metadata and
+`GET` / `POST /mcp` return HTTP 404. The Remote MCP is therefore **not live**.
+Do not publish the URL as a working client connection until the checks below
+pass.
 
-Bind `mcp.shingihou.com` to the SGH Service Backend service, set the MCP/OAuth
-variables in that service's secret manager, then deploy the backend commit that
-contains `src/routes/publicMcp.ts`.
+## Preferred no-additional-service topology
+
+To avoid paying for another Zeabur service, mount the public Streamable HTTP
+gateway in the existing SGH Service Backend process and reuse its private
+`/api/service/mcp` control-plane adapter. This repository contains the tested
+standalone Express gateway and contract; the equivalent public routes are not
+yet mounted in the current SGH Service deployment.
+
+The target SGH Service deployment must expose all of the following from the
+same public origin:
+
+- `GET /health`
+- `GET /.well-known/oauth-protected-resource`
+- `POST /mcp`
+- `GET /mcp` and `DELETE /mcp` as explicit HTTP 405 responses for stateless mode
+
+Keep `mcp.shingihou.com` bound to SGH Service only after those routes have been
+integrated and tested. Creating a second Zeabur MCP service is optional, not a
+requirement, and may add hosting cost.
 
 ## Pre-release checks
 
@@ -56,16 +73,20 @@ Then verify:
 Safe OAuth smoke test（does not confirm, redeem, cancel, hand off, or call）:
 
 ```bash
-MCP_BASE_URL=https://mcp.shingihou.com pnpm smoke:mcp-oauth
+MCP_BASE_URL=https://mcp.shingihou.com npm run smoke:mcp-oauth
 ```
 
 After anonymous metadata/challenge checks pass, provide a short-lived production test token through the deployment secret shell only:
 
 ```bash
-MCP_BASE_URL=https://mcp.shingihou.com MCP_OAUTH_TOKEN='***' pnpm smoke:mcp-oauth
+MCP_BASE_URL=https://mcp.shingihou.com \
+MCP_OAUTH_TOKEN='***' \
+MCP_SMOKE_REQUEST_ID='a-test-users-existing-request-id' \
+npm run smoke:mcp-oauth
 ```
 
 Do not paste the token into an issue, README, CI log, or shell history shared with others.
+The script never prints the token or an authenticated request body and never calls an MCP write tool.
 
 ## Release gate
 

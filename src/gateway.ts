@@ -6,8 +6,6 @@ import type {
 import type { AppConfig } from './config.js';
 
 export interface SghGateway {
-  capabilities(): Promise<Record<string, unknown>>;
-  checkTaskSupported(input: Record<string, unknown>): Promise<Record<string, unknown>>;
   createDraft(auth: AuthContext, input: AssistanceDraftInput, idempotencyKey: string): Promise<GatewayResponse>;
   confirm(auth: AuthContext, requestId: string, contractVersion: number, idempotencyKey: string): Promise<GatewayResponse>;
   status(auth: AuthContext, requestId: string): Promise<GatewayResponse>;
@@ -33,17 +31,6 @@ export class HttpSghGateway implements SghGateway {
     private readonly config: AppConfig,
     private readonly fetchImpl: typeof fetch = fetch
   ) {}
-
-  capabilities() {
-    return this.request<Record<string, unknown>>('/capabilities', { method: 'GET' });
-  }
-
-  checkTaskSupported(input: Record<string, unknown>) {
-    return this.request<Record<string, unknown>>('/support-check', {
-      method: 'POST',
-      body: JSON.stringify(input),
-    });
-  }
 
   createDraft(auth: AuthContext, input: AssistanceDraftInput, idempotencyKey: string) {
     return this.authed<GatewayResponse>(auth, '/requests', {

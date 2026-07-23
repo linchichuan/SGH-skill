@@ -11,17 +11,23 @@
 - ローカルでの相談内容、必要情報、質問項目の整理
 - 静的かつdeterministicな `get_sgh_capabilities`
 - 外部APIや人を呼ばない `check_task_supported`
-- 必要に応じて、OAuth済みかつ副作用のないdraft作成
 
-無料公開レイヤーは、SGH Phoneの通話枠、予約代行、人的対応を一切付与しない。
+無料公開レイヤーは、SGH Phoneの通話枠、予約代行、人的対応、LINE Messaging API送信、Rich Menu公開、LIFFログイン、MenuBridgeの画像解析、外部AI処理、MS Platformのtenant機能を一切付与しない。
+
+OAuth済みのserver-side draftは、有料実行フローの準備段階であり、公開ローカルレイヤーには含めない。draft自体は発信又は予約を開始しないが、認証、rate limit及び運用上の利用条件を適用する。
 
 ## 有料実行レイヤー
 
 - SGHによる対外電話
 - 実際の予約、変更、取消
 - 人的確認、例外対応、継続フォロー
+- LINEメッセージ送信、Rich Menu公開、LINE Login／LIFF／Webhookの個別設定と運用
+- MenuBridge等でSGH側のVision／LLM／storageを使用する処理
+- MS Platformのtenant初期設定、患者／予約／通知／video／決済機能
 - Twilio、音声AI、検索API、通知基盤など従量課金を伴う処理
 - 検証済み通話結果の作成と提供
+
+LINE Official Accountの友だち追加や公開Rich Menuの閲覧は、各LINEアカウントの公開導線に従う。これらはSkillからAPIを実行する権限、外部AI credits、患者登録、予約、電話又は人的対応の利用資格ではない。
 
 ## 実行前の必須gate
 

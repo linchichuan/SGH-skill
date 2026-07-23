@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: SGH service request / 導入相談
-    url: https://phone.shingihou.com/support/contact
-    about: Do not submit phone requests, reservations, personal data, Pass tokens or payment information in GitHub Issues.
+    url: https://www.shingihou.com/ja/contact
+    about: Do not submit LINE/LIFF setup requests, phone requests, reservations, personal data, Pass tokens or payment information in GitHub Issues.
   - name: Private security report
-    url: https://phone.shingihou.com/support/contact
+    url: https://www.shingihou.com/ja/contact
     about: Report vulnerabilities privately and include only the minimum non-sensitive detail.

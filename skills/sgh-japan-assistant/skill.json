@@ -1,10 +1,12 @@
 {
   "name": "sgh-japan-assistant",
-  "version": "0.2.0",
-  "title": "SGH Japan Phone & Reservation Assistant",
-  "description": "Prepare SGH Japan phone requests and, after verified paid entitlement and explicit approval, confirm, track and retrieve results.",
+  "version": "0.4.0",
+  "title": "SGH Japan AI & LINE Service Navigator",
+  "description": "Discover verified Shingihou LINE and LIFF entry points, Medical Supporter, MS Platform and other SGH services; prepare safe briefs; and separately enter eligible paid execution flows.",
   "license": "MIT",
-  "languages": ["ja", "zh-TW", "en"],
+  "languages": ["ja", "zh-TW", "en", "ko", "tr"],
+  "documentation_languages": ["ja", "zh-TW", "en", "ko", "tr"],
+  "execution_result_languages": ["ja", "zh-TW", "en"],
   "mcp": {
     "transport": "streamable-http",
     "url": "https://mcp.shingihou.com/mcp",

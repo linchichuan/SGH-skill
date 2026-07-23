@@ -17,8 +17,6 @@ const config: AppConfig = {
 };
 
 const gateway: SghGateway = {
-  capabilities: vi.fn(async () => ({ languages: ['ja', 'zh-TW', 'en'] })),
-  checkTaskSupported: vi.fn(async () => ({ supported: true, missing_fields: [] })),
   createDraft: vi.fn(),
   confirm: vi.fn(),
   status: vi.fn(),
@@ -72,7 +70,12 @@ describe('MCP HTTP server', () => {
       });
     expect(response.status).toBe(200);
     expect(response.body.result.serverInfo.name).toBe('sgh-japan-assistant');
+    expect(response.body.result.serverInfo.version).toBe('0.4.0');
     expect(response.body.result.capabilities.tools).toBeDefined();
+    expect(response.body.result.instructions).toContain(
+      'paid phone and ordinary-reservation execution module'
+    );
+    expect(response.body.result.instructions).toContain('cannot send LINE messages');
   });
 
   it('calls a public tool and returns the universal envelope', async () => {
@@ -90,6 +93,46 @@ describe('MCP HTTP server', () => {
       request_id: 'capabilities',
       status: 'COMPLETED',
       is_final: true,
+      capabilities: {
+        full_sgh_service_catalog: false,
+        public_query_cost: {
+          sgh_call_credits_consumed: 0,
+          sgh_human_credits_consumed: 0,
+          external_ai_api_called: false,
+          sgh_service_api_called: false,
+        },
+      },
+    });
+  });
+
+  it('applies the no-cost local support policy without authentication', async () => {
+    const response = await request(app)
+      .post('/mcp')
+      .set('Accept', 'application/json, text/event-stream')
+      .send({
+        jsonrpc: '2.0',
+        id: 6,
+        method: 'tools/call',
+        params: {
+          name: 'check_task_supported',
+          arguments: {
+            task_type: 'RESERVATION',
+            target_name: 'Test Restaurant',
+            target_location: 'Fukuoka',
+            goal: 'Check ordinary dinner availability.',
+          },
+        },
+      });
+    expect(response.status).toBe(200);
+    expect(response.body.result.structuredContent.support).toMatchObject({
+      checked_without_external_service: true,
+      supported: true,
+      request_creation_allowed: true,
+      execution_eligible: false,
+      commercial_boundary: {
+        free_call_credits_included: 0,
+        free_human_credits_included: 0,
+      },
     });
   });
 
@@ -120,6 +163,11 @@ describe('MCP HTTP server', () => {
     );
     expect(createTool.inputSchema.required).toContain('idempotency_key');
     expect(createTool.annotations.idempotentHint).toBe(true);
+    const capabilitiesTool = response.body.result.tools.find(
+      (tool: { name: string }) => tool.name === 'get_sgh_capabilities'
+    );
+    expect(capabilitiesTool.description).toContain('not the full SGH service catalog');
+    expect(capabilitiesTool.description).toContain('calls no SGH backend or external AI');
   });
 
   it('rejects a queued execution response that does not prove paid entitlement', async () => {

@@ -2,13 +2,43 @@
 
 ## 目的
 
-ユーザーが自分の AI に日本語の電話、一般予約、確認を依頼し、内容確認後に SGH が非同期で実行し、推測ではない進捗と結果を返す。
+SGH Japan Assistantを、新義豊のサービスをAIから発見、理解、整理、案内できる公開Service Navigatorと、その先にある限定的な有料実行モジュールに分離する。
+
+公開Skillは、Medical Supporter Official LINE、醫療助手 LINE、SGH SERVICE／MenuBridge、LINE Commerce、MS Platform、Clinic DX、SGH Phone、AI自動化、Web/SNS、KusuriJapan等の適切な窓口を案内し、相談Briefや問い合わせ案をローカルに作成する。この段階ではLINE送信、Rich Menu公開、患者登録、外部送信、電話、予約、人的作業、外部AI処理、実装作業を開始しない。
+
+Remote MCPのPhase 1は、対応可能な日本語電話、一般予約、確認について、内容確認後にSGHが非同期で実行し、推測ではない進捗と結果を返す。Remote MCPを全SGHサービスの実行APIとして扱わない。
+
+```text
+Public Skill
+Discover → Understand → Prepare → Route
+                         │ no SGH execution cost
+                         ▼
+Official consultation / paid entitlement
+                         ▼
+Remote MCP Phase 1
+Confirm → Execute → Track / Result
+```
+
+LINE／LIFFは単一の共通Botではなく、目的別の入口として扱う。
+
+```text
+Medical Supporter Official LINE ─┐
+醫療助手 LINE                    ├─ consultation / discovery entries
+SGH SERVICE / MenuBridge         ├─ service and authenticated Web entries
+LINE Commerce / custom Bot       ├─ project-specific implementation examples
+MS Platform                      └─ clinic operations Demo / MVP / Pilot
+
+Public Skill: compare + explain + No-PHI brief only
+Production systems: authenticate + authorize + confirm + execute
+```
+
+Medical SupporterのMyPageはMVP／連携整備中、MS Platformは公開mock Demoとproductized pre-pilot、LINE Commerce及び客製Botはcode-level／Demo・MVP実例として表現する。個別のdeployment、tenant、provider設定を確認せずに本番稼働を主張しない。
 
 ## Ownership
 
 | Component | Owns | Must not own |
 |---|---|---|
-| Public Skill | Discovery、workflow guidance、safety rules | secret、個人情報、実行状態 |
+| Public Skill | Service discovery、LINE／LIFF比較、No-PHI brief、consultation brief、inquiry draft、workflow guidance、safety rules | secret、要配慮情報、実行状態、外部副作用 |
 | MCP Gateway | MCP transport、OAuth token verification、scope enforcement、tool projection | 通話中の長時間 connection、業務状態の真相 |
 | SGH Service | Request、consent、state、Pass、billing、outbox、tenant isolation | Twilio call lifecycle |
 | SGH Phone | Dialing、voice policy、provider callback、evidence extraction | public OAuth、Pass、user-facing state wording |
@@ -36,6 +66,8 @@ confirm_assistance_request
 `QUEUED`、`CALLING`、`WAITING_FOR_BUSINESS` は予約成立を意味しない。`CONFIRMED` は対象事業者から得た deterministic evidence がある場合に限る。
 
 Public repository access and local Skill installation grant zero SGH call credits and zero human-service credits. See [commercial-boundary.md](commercial-boundary.md).
+
+`get_sgh_capabilities` と `check_task_supported` は、MCP gateway内のversioned local policyとして評価する。SGH Service、Supabase、Twilio、外部AI API、human queueを呼び出さず、request、quote、bookingを作成しない。現在の料金、空席又はbusiness availabilityを返すtoolとして扱わない。
 
 ## Public state mapping
 
@@ -71,6 +103,7 @@ Unknown internal/provider states fail into `HUMAN_REVIEW`; they never become `CO
 
 ## Phase boundaries
 
-- Phase 1: public discovery、local consultation brief、request-bound quote and paid-entitlement contract、private beta for funded non-sensitive actions.
+- Public now: static service discovery、local consultation brief、Japanese inquiry draft、automation readiness guidance、official routing.
+- Remote MCP Phase 1: request-bound quote and paid-entitlement contract、private beta for funded non-sensitive phone and ordinary-reservation actions.
 - Phase 2: self-service checkout、rescheduling、Pass management及びLINE/Email result notification.
 - Phase 3: medical vertical with separate scopes、consent、retention and compliance review.

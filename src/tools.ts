@@ -11,6 +11,10 @@ import {
 } from './contracts.js';
 import type { SghGateway } from './gateway.js';
 import { GatewayError } from './gateway.js';
+import {
+  checkPublicTaskSupport,
+  publicExecutionCapabilities,
+} from './publicPolicy.js';
 import { makeEnvelope } from './status.js';
 
 const envelopeOutput = {
@@ -171,11 +175,11 @@ export function createSghMcpServer(context: ToolContext): McpServer {
   const server = new McpServer(
     {
       name: 'sgh-japan-assistant',
-      version: '0.1.0',
+      version: '0.4.0',
     },
     {
       instructions:
-        'The public repository includes zero SGH call or human-service credits. A draft never places a call. Only confirm_assistance_request may queue execution after verified paid entitlement and explicit user confirmation. QUEUED or CALLING never means a reservation is confirmed. Never invent availability or results. Keep personal data minimal and do not accept medical records, card data, passwords, passport data, or emergency requests.',
+        'This MCP is the paid phone and ordinary-reservation execution module of the broader SGH Japan Service Navigator. It is not a general execution API for all Shingihou services and cannot send LINE messages, publish Rich Menus, initialize LIFF, register patients, enter MS Platform, or spend MenuBridge or external-AI allowance. The public repository includes zero SGH call, LINE-message, external-AI, implementation, or human-service credits. A draft never places a call. Only confirm_assistance_request may queue a supported action after verified paid entitlement and explicit user confirmation. QUEUED or CALLING never means a reservation is confirmed. Never invent availability or results. Keep personal data minimal and do not accept medical records, card data, passwords, passport data, or emergency requests.',
     }
   );
 
@@ -183,7 +187,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     'get_sgh_capabilities',
     {
       title: 'Get SGH capabilities',
-      description: 'Return supported Japan phone tasks, languages, service area, availability, estimated pricing policy, and exclusions. This does not create a request.',
+      description: 'Return a versioned local policy snapshot for the supported Phase 1 paid phone and ordinary-reservation execution surface, languages, service area, pricing policy, and exclusions. This is not the full SGH service catalog, calls no SGH backend or external AI, and creates no request.',
       inputSchema: {},
       outputSchema: {
         ...envelopeOutput,
@@ -204,7 +208,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
           internalStatus: 'SUCCEEDED',
           message: 'SGHの対応範囲を取得しました。電話や予約は実行されていません。',
         }),
-        capabilities: await context.gateway.capabilities(),
+        capabilities: publicExecutionCapabilities,
       }))
   );
 
@@ -212,7 +216,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
     'check_task_supported',
     {
       title: 'Check task support',
-      description: 'Check whether SGH may handle a proposed non-emergency Japan phone task and identify missing information. This does not create a request or place a call.',
+      description: 'Apply a versioned local policy check to a proposed non-emergency Japan phone task. This calls no SGH backend or external AI and creates no request, quote, call, booking, or human task.',
       inputSchema: {
         task_type: z.enum(['PHONE_INQUIRY', 'RESERVATION', 'RESCHEDULE', 'CANCELLATION']),
         target_name: z.string().min(1).max(300),
@@ -238,7 +242,7 @@ export function createSghMcpServer(context: ToolContext): McpServer {
           internalStatus: 'SUCCEEDED',
           message: '対応可否を確認しました。依頼や電話はまだ作成されていません。',
         }),
-        support: await context.gateway.checkTaskSupported(input),
+        support: checkPublicTaskSupport(input),
       }))
   );
 

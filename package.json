@@ -1,9 +1,9 @@
 {
   "name": "@sgh/japan-assistant-mcp",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": false,
   "type": "module",
-  "description": "Public Agent Skill and Remote MCP gateway for SGH Japan phone assistance",
+  "description": "Public SGH AI and LINE service navigator with MS Platform discovery and an optional paid execution MCP gateway",
   "license": "MIT",
   "engines": {
     "node": ">=20.0.0"
@@ -16,7 +16,8 @@
     "start": "node dist/index.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "smoke:mcp-oauth": "node scripts/smoke-mcp-oauth.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",
@@ -31,7 +32,7 @@
     "@types/node": "25.5.0",
     "@types/supertest": "7.2.0",
     "supertest": "7.2.2",
-    "tsx": "4.21.0",
+    "tsx": "4.23.1",
     "typescript": "7.0.2",
     "vitest": "4.1.10"
   }
